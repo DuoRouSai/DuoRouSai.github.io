@@ -16,20 +16,20 @@
   <meta name="author" content="DuoRouSai">
   <meta name="keywords" content="">
   
-    <meta name="description" content="配置同时使用 Gitlab、Github、Gitee 的开发环境 测试环境：window11  摘要： 配置同时使用 Gitlab、Github、Gitee(码云) 共存的开发环境 - 简书 (jianshu.com)">
+    <meta name="description" content="使用 Hexo 搭建播客，遇到一个问题。因为同时使用 Gitlab, Github, Gitee 在同一开发环境下，但是 Git 的 global 下只能配置一个用户名和用户邮箱，所以就需要配置 .ssh 文件夹下的 config。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="配置同时使用 Gitlab、Github、Gitee 的开发环境">
+<meta property="og:title" content="windows .ssh文件夹下 config 配置">
 <meta property="og:url" content="http://example.com/2022/02/15/%E9%85%8D%E7%BD%AE%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%20Gitlab%E3%80%81Github%E3%80%81Gitee%20%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="配置同时使用 Gitlab、Github、Gitee 的开发环境 测试环境：window11  摘要： 配置同时使用 Gitlab、Github、Gitee(码云) 共存的开发环境 - 简书 (jianshu.com)">
+<meta property="og:description" content="使用 Hexo 搭建播客，遇到一个问题。因为同时使用 Gitlab, Github, Gitee 在同一开发环境下，但是 Git 的 global 下只能配置一个用户名和用户邮箱，所以就需要配置 .ssh 文件夹下的 config。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-15T07:34:35.786Z">
-<meta property="article:modified_time" content="2022-02-15T07:41:00.993Z">
+<meta property="article:modified_time" content="2022-02-21T02:15:55.056Z">
 <meta property="article:author" content="DuoRouSai">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>配置同时使用 Gitlab、Github、Gitee 的开发环境 - Hexo</title>
+  <title>windows .ssh文件夹下 config 配置 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -78,7 +78,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Fluid</strong>
+      <strong>DuoR</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -170,12 +170,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('/img/bg/bg.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="配置同时使用 Gitlab、Github、Gitee 的开发环境">
+            <span class="h2" id="subtitle" title="windows .ssh文件夹下 config 配置">
               
             </span>
 
@@ -196,7 +196,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      98 字
+      372 字
     </span>
   
 
@@ -205,7 +205,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      1 分钟
+      4 分钟
     </span>
   
 
@@ -234,14 +234,20 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">配置同时使用 Gitlab、Github、Gitee 的开发环境</h1>
+            <h1 style="display: none">windows .ssh文件夹下 config 配置</h1>
             
             <div class="markdown-body">
-              <h3 id="配置同时使用-Gitlab、Github、Gitee-的开发环境"><a href="#配置同时使用-Gitlab、Github、Gitee-的开发环境" class="headerlink" title="配置同时使用 Gitlab、Github、Gitee 的开发环境"></a>配置同时使用 Gitlab、Github、Gitee 的开发环境</h3><blockquote>
-<p>测试环境：window11</p>
+              <h2 id="windows-ssh-文件夹下-config-配置"><a href="#windows-ssh-文件夹下-config-配置" class="headerlink" title="windows .ssh 文件夹下 config 配置"></a>windows .ssh 文件夹下 config 配置</h2><blockquote>
+<p>环境：</p>
+<p>OS： window11</p>
 </blockquote>
-<p>摘要：</p>
+<h3 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h3><p>使用 Hexo 搭建播客，遇到一个问题。因为同时使用 Gitlab, Github, Gitee 在同一开发环境下，但是 Git 的 global 下只能配置一个用户名和用户邮箱，所以就需要配置 .ssh 文件夹下的 config。</p>
+<h3 id="解决问题："><a href="#解决问题：" class="headerlink" title="解决问题："></a>解决问题：</h3><p>大致配置流程在下面</p>
 <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/68578d52470c">配置同时使用 Gitlab、Github、Gitee(码云) 共存的开发环境 - 简书 (jianshu.com)</a></p>
+<p>针对 config 配置，补充需要注意的一些问题：</p>
+<p>配置公司或者自己搭建的代码库的时候：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment">#gitLab</span><br>Host xx.xx.xx.xx <span class="hljs-comment"># 填 ip 即可，无需 HostName 属性了</span><br>    IdentityFile ~/.ssh/id_rsa.gitlab<br>    PreferredAuthentications publickey  <span class="hljs-comment"># 使用公钥进行验证</span><br></code></pre></td></tr></table></figure>
+
 
             </div>
             <hr>
@@ -265,12 +271,6 @@
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2022/02/15/hello-world/">
-                        <span class="hidden-mobile">Hello World</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>

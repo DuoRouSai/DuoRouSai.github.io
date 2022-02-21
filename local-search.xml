@@ -4,24 +4,11 @@
   
   
   <entry>
-    <title>配置同时使用 Gitlab、Github、Gitee 的开发环境</title>
+    <title>windows .ssh文件夹下 config 配置</title>
     <link href="/2022/02/15/%E9%85%8D%E7%BD%AE%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%20Gitlab%E3%80%81Github%E3%80%81Gitee%20%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/"/>
     <url>/2022/02/15/%E9%85%8D%E7%BD%AE%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8%20Gitlab%E3%80%81Github%E3%80%81Gitee%20%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
     
-    <content type="html"><![CDATA[<h3 id="配置同时使用-Gitlab、Github、Gitee-的开发环境"><a href="#配置同时使用-Gitlab、Github、Gitee-的开发环境" class="headerlink" title="配置同时使用 Gitlab、Github、Gitee 的开发环境"></a>配置同时使用 Gitlab、Github、Gitee 的开发环境</h3><blockquote><p>测试环境：window11</p></blockquote><p>摘要：</p><p><a href="https://www.jianshu.com/p/68578d52470c">配置同时使用 Gitlab、Github、Gitee(码云) 共存的开发环境 - 简书 (jianshu.com)</a></p>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="/2022/02/15/hello-world/"/>
-    <url>/2022/02/15/hello-world/</url>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="windows-ssh-文件夹下-config-配置"><a href="#windows-ssh-文件夹下-config-配置" class="headerlink" title="windows .ssh 文件夹下 config 配置"></a>windows .ssh 文件夹下 config 配置</h2><blockquote><p>环境：</p><p>OS： window11</p></blockquote><h3 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h3><p>使用 Hexo 搭建播客，遇到一个问题。因为同时使用 Gitlab, Github, Gitee 在同一开发环境下，但是 Git 的 global 下只能配置一个用户名和用户邮箱，所以就需要配置 .ssh 文件夹下的 config。</p><h3 id="解决问题："><a href="#解决问题：" class="headerlink" title="解决问题："></a>解决问题：</h3><p>大致配置流程在下面</p><p><a href="https://www.jianshu.com/p/68578d52470c">配置同时使用 Gitlab、Github、Gitee(码云) 共存的开发环境 - 简书 (jianshu.com)</a></p><p>针对 config 配置，补充需要注意的一些问题：</p><p>配置公司或者自己搭建的代码库的时候：</p><figure class="highlight ini"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment">#gitLab</span><br>Host xx.xx.xx.xx <span class="hljs-comment"># 填 ip 即可，无需 HostName 属性了</span><br>    IdentityFile ~/.ssh/id_rsa.gitlab<br>    PreferredAuthentications publickey  <span class="hljs-comment"># 使用公钥进行验证</span><br></code></pre></td></tr></table></figure>]]></content>
     
     
     
