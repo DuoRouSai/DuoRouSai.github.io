@@ -1,0 +1,474 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/favicon.png">
+  <link rel="icon" href="/img/favicon/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="DuoRouSai">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="React Hook 初体验1.Hook简介Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数。Hook 不能在 class 组件中使用 —— 这使得你不使用 class 也能使用 React。 2.动机官方解释：  组件之间复用状态逻辑很难 复杂组件变得难以理解 难以理解的 class  3.Hook规则只在最顶层使用 Hook 不要在循环，条件或嵌套函">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2022/03/02/React%20Hook%20%E5%88%9D%E4%BD%93%E9%AA%8C/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="React Hook 初体验1.Hook简介Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数。Hook 不能在 class 组件中使用 —— 这使得你不使用 class 也能使用 React。 2.动机官方解释：  组件之间复用状态逻辑很难 复杂组件变得难以理解 难以理解的 class  3.Hook规则只在最顶层使用 Hook 不要在循环，条件或嵌套函">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-02T03:52:57.999Z">
+<meta property="article:modified_time" content="2022-03-01T10:38:01.237Z">
+<meta property="article:author" content="DuoRouSai">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DuoR</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-02 11:52" pubdate>
+        2022年3月2日 中午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none"></h1>
+            
+            <div class="markdown-body">
+              <h1 id="React-Hook-初体验"><a href="#React-Hook-初体验" class="headerlink" title="React Hook 初体验"></a>React Hook 初体验</h1><h2 id="1-Hook简介"><a href="#1-Hook简介" class="headerlink" title="1.Hook简介"></a>1.Hook简介</h2><p>Hook 是一些可以让你在函数组件里“钩入” React state 及生命周期等特性的函数。Hook 不能在 class 组件中使用 —— 这使得你不使用 class 也能使用 React。</p>
+<h2 id="2-动机"><a href="#2-动机" class="headerlink" title="2.动机"></a>2.动机</h2><p><a target="_blank" rel="noopener" href="https://react.docschina.org/docs/hooks-intro.html#motivation">官方解释：</a></p>
+<ol>
+<li>组件之间复用状态逻辑很难</li>
+<li>复杂组件变得难以理解</li>
+<li>难以理解的 class</li>
+</ol>
+<h2 id="3-Hook规则"><a href="#3-Hook规则" class="headerlink" title="3.Hook规则"></a>3.Hook规则</h2><h4 id="只在最顶层使用-Hook"><a href="#只在最顶层使用-Hook" class="headerlink" title="只在最顶层使用 Hook"></a>只在最顶层使用 Hook</h4><blockquote>
+<p><strong>不要在循环，条件或嵌套函数中调用 Hook，</strong> 确保总是在你的 React 函数的最顶层调用他们。</p>
+</blockquote>
+<h4 id="只在-React-函数中调用-Hook"><a href="#只在-React-函数中调用-Hook" class="headerlink" title="只在 React 函数中调用 Hook"></a>只在 React 函数中调用 Hook</h4><p><strong>不要在普通的 JavaScript 函数中调用 Hook。</strong>你可以：</p>
+<ul>
+<li>✅ 在 React 的函数组件中调用 Hook</li>
+<li>✅ 在自定义 Hook 中调用其他 Hook </li>
+</ul>
+<h2 id="4-基础Hook"><a href="#4-基础Hook" class="headerlink" title="4.基础Hook"></a>4.基础Hook</h2><h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h3><p>function 组件示例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Example</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// 声明一个叫 &quot;count&quot; 的 state 变量  </span><br>	<span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>);<br>    <span class="hljs-keyword">return</span> (<br>        <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>You clicked &#123;count&#125; times<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> setCount(count +1)&#125;&gt;</span><br><span class="language-xml">            Click me</span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    )<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>等价的 Class 示例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Example</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">props</span>) &#123;<br>    <span class="hljs-variable language_">super</span>(props);<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">state</span> = &#123;<br>      <span class="hljs-attr">count</span>: <span class="hljs-number">0</span><br>    &#125;;<br>  &#125;<br><br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>You clicked &#123;this.state.count&#125; times<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> this.setState(&#123; count: this.state.count + 1 &#125;)&#125;&gt;</span><br><span class="language-xml">          Click me</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>    );<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+
+
+<h3 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h3><blockquote>
+<p><em>Effect Hook</em> 可以让你在函数组件中执行副作用操作</p>
+</blockquote>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span>, &#123; useState, useEffect &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Example</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>);<br><br>  <span class="hljs-comment">// Similar to componentDidMount and componentDidUpdate:</span><br>  <span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>     <span class="hljs-comment">// Update the document title using the browser API    </span><br>     <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-string">`You clicked <span class="hljs-subst">$&#123;count&#125;</span> times`</span>;  <br>  &#125;);<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>You clicked &#123;count&#125; times<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> setCount(count + 1)&#125;&gt;</span><br><span class="language-xml">        Click me</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<blockquote>
+<p>提示</p>
+<p>如果你熟悉 React class 的生命周期函数，你可以把 <code>useEffect</code> Hook 看做 <code>componentDidMount</code>，<code>componentDidUpdate</code> 和 <code>componentWillUnmount</code> 这三个函数的组合。</p>
+</blockquote>
+<h4 id="无需清除的-effect"><a href="#无需清除的-effect" class="headerlink" title="无需清除的 effect"></a>无需清除的 effect</h4><p>使用 class 的示例：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-comment">// 实时更新标签页 title</span><br><span class="hljs-title function_">componentDidMount</span>(<span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-string">`You clicked <span class="hljs-subst">$&#123;<span class="hljs-variable language_">this</span>.state.count&#125;</span> times`</span>;<br>&#125;  <br><span class="hljs-title function_">componentDidUpdate</span>(<span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-string">`You clicked <span class="hljs-subst">$&#123;<span class="hljs-variable language_">this</span>.state.count&#125;</span> times`</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>当你使用 hook：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-comment">// 当组件重新渲染之后就会执行</span><br><span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;    <br>    <span class="hljs-variable language_">document</span>.<span class="hljs-property">title</span> = <span class="hljs-string">`You clicked <span class="hljs-subst">$&#123;count&#125;</span> times`</span>;<br>&#125;);<br></code></pre></div></td></tr></table></figure>
+
+
+
+<h4 id="需要清除的-effect"><a href="#需要清除的-effect" class="headerlink" title="需要清除的 effect"></a>需要清除的 effect</h4><p>使用 class 的示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">// 通常会在 componentDidMount 中设置订阅，并在 componentWillUnmount 中清除它。例如：订阅-发布</span><br><span class="hljs-title function_">componentDidMount</span>(<span class="hljs-params"></span>) &#123;    <br>     <span class="hljs-title class_">ChatAPI</span>.<span class="hljs-title function_">subscribeToFriendStatus</span>(      <br>         <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>.<span class="hljs-property">friend</span>.<span class="hljs-property">id</span>,         <br>     );<br> &#125;  <br><span class="hljs-title function_">componentWillUnmount</span>(<span class="hljs-params"></span>) &#123;    <br>    <span class="hljs-title class_">ChatAPI</span>.<span class="hljs-title function_">unsubscribeFromFriendStatus</span>(      <br>        <span class="hljs-variable language_">this</span>.<span class="hljs-property">props</span>.<span class="hljs-property">friend</span>.<span class="hljs-property">id</span>,        <br>    );<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>当你使用 hook：</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">// effect 中返回一个函数，这是 effect 可选的清除机制。每个 effect 都可以返回一个清除函数。React 会在组件卸载的时候执行清除操作。正如之前学到的，effect 在每次渲染的时候都会执行。这就是为什么 React 会在执行当前 effect 之前对上一个 effect 进行清除。</span><br><span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;      <br>	<span class="hljs-title class_">ChatAPI</span>.<span class="hljs-title function_">subscribeToFriendStatus</span>(props.<span class="hljs-property">friend</span>.<span class="hljs-property">id</span>);    <br>    <span class="hljs-comment">// 清除订阅</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> &#123;      <br>        <span class="hljs-title class_">ChatAPI</span>.<span class="hljs-title function_">unsubscribeFromFriendStatus</span>(props.<span class="hljs-property">friend</span>.<span class="hljs-property">id</span>);<br>    &#125;;<br>&#125;)<br></code></pre></div></td></tr></table></figure>
+
+
+
+<h2 id="5-额外的Hook"><a href="#5-额外的Hook" class="headerlink" title="5.额外的Hook"></a>5.额外的Hook</h2><h2 id="6-自定义Hook"><a href="#6-自定义Hook" class="headerlink" title="6.自定义Hook"></a>6.自定义Hook</h2>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/02/Style-Component%20%20%E6%B5%85%E4%BD%93%E9%AA%8C/">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
