@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/favicon.png">
+  <link rel="icon" href="/img/favicon/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="DuoRouSai">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="React 入门">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React of Study">
+<meta property="og:url" content="http://example.com/2022/03/18/React%20of%20Study/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="React 入门">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220110162421373.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220112113749152.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220112114024249.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220112140120136.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220112161357938.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220113230205483.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220113230149722.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220114154029332.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220114155209771.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220114155416804.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220114160524889.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220114160544635.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220126180325926.png">
+<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220126180413848.png">
+<meta property="article:published_time" content="2022-03-17T16:54:03.644Z">
+<meta property="article:modified_time" content="2022-03-17T17:01:38.197Z">
+<meta property="article:author" content="DuoRouSai">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220110162421373.png">
+  
+  
+  <title>React of Study - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DuoR</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="React of Study">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-18 00:54" pubdate>
+        2022年3月18日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">React of Study</h1>
+            
+            <div class="markdown-body">
+              <h1 id="React-of-Study"><a href="#React-of-Study" class="headerlink" title="React of Study"></a>React of Study</h1><h2 id="一-React-入门"><a href="#一-React-入门" class="headerlink" title="一.React 入门"></a>一.React 入门</h2><h3 id="JSX-简介"><a href="#JSX-简介" class="headerlink" title="JSX 简介"></a>JSX 简介</h3><p>JSX，是一个 JavaScript 的语法扩展。</p>
+<h5 id="语法规则："><a href="#语法规则：" class="headerlink" title="语法规则："></a>语法规则：</h5><ul>
+<li><p>在 JSX 中嵌入表达式(区分表达式与代码块)</p>
+</li>
+<li><p>本身 JSX 也是一个表达式</p>
+</li>
+<li><p>虚拟 DOM ,一些标签的属性采用 <strong>“ 小驼峰法”</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">VDOM</span> = <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&#123;&#123;</span> <span class="hljs-attr">fontSize:</span> &#x27;<span class="hljs-attr">26px</span>&#x27; &#125;&#125;&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br></code></pre></div></td></tr></table></figure></li>
+<li><p>JSX 里的 <code>class</code> 变成了 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/className"><code>className</code></a>，而 <code>tabindex</code> 则变为 tabIndex;</p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> <span class="hljs-variable constant_">VDOM</span> = <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;title&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span><br></code></pre></div></td></tr></table></figure></li>
+<li><p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220110162421373.png" srcset="/img/loading.gif" lazyload alt="image-20220110162421373">。</p>
+</li>
+</ul>
+<h3 id="React-Developer-Tools-调试工具"><a href="#React-Developer-Tools-调试工具" class="headerlink" title="React Developer Tools 调试工具"></a>React Developer Tools 调试工具</h3><ul>
+<li>Components 组件结构</li>
+<li>Profiler 性能监控</li>
+</ul>
+<h2 id="二-React-面向组件编程"><a href="#二-React-面向组件编程" class="headerlink" title="二.React 面向组件编程"></a>二.React 面向组件编程</h2><h3 id="1-基本理解和使用"><a href="#1-基本理解和使用" class="headerlink" title="1.基本理解和使用"></a>1.基本理解和使用</h3><ul>
+<li><p>函数式组件</p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-comment">// 在 Babel 下 ，是严格模式</span><br><span class="hljs-comment">// 函数式编程</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">MyComponent</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>我是函数式编程“简单组件”<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br>&#125;<br><span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">render</span>(<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">MyComponent</span> /&gt;</span></span>, <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;test&#x27;</span>))<br><span class="hljs-comment">// &lt;MyComponent/&gt; react 帮你调用 MyComponent</span><br></code></pre></div></td></tr></table></figure></li>
+<li><p>类式组件</p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-comment">// 在 Babel 下 ，是严格模式</span><br><span class="hljs-comment">// 类式编程</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="hljs-comment">// “复杂组件” 有 State</span><br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>我是类式编程“复杂组件”<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span><br>    )<br>  &#125;<br>&#125;<br><span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">render</span>(<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">MyComponent</span> /&gt;</span></span>, <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;test&#x27;</span>))<br><span class="hljs-comment">// &lt;MyComponent/&gt; react 帮你 new MyComponent</span><br></code></pre></div></td></tr></table></figure></li>
+</ul>
+<h3 id="2-组件实例的三大核心属性-1-State"><a href="#2-组件实例的三大核心属性-1-State" class="headerlink" title="2.组件实例的三大核心属性 1: State"></a>2.组件实例的三大核心属性 1: State</h3><h5 id="理解："><a href="#理解：" class="headerlink" title="理解："></a>理解：</h5><p>1.state 是组件的状态机，通过更新组件的 state 来更新对应页面显示（重新渲染）</p>
+<p>2.state 是对象形式的，多个 key-value 组合</p>
+<h5 id="值得注意："><a href="#值得注意：" class="headerlink" title="值得注意："></a>值得注意：</h5><blockquote>
+<p>1.组件中 render 方法中的 this 是组件实例的对象</p>
+<p>2.组件自定义方法中，默认开启了 use strict，为 undefine,解决：</p>
+<ul>
+<li><p>bind()，强制绑定实例对象的 this</p>
+</li>
+<li><p>箭头函数</p>
+<p>3.setState()，组件的数据不可以直接更改。</p>
+</li>
+</ul>
+</blockquote>
+<p>​</p>
+<h3 id="3-组件实例的三大核心属性-2-props"><a href="#3-组件实例的三大核心属性-2-props" class="headerlink" title="3.组件实例的三大核心属性 2: props"></a>3.组件实例的三大核心属性 2: props</h3><h5 id="理解：-1"><a href="#理解：-1" class="headerlink" title="理解："></a>理解：</h5><ol>
+<li>每个组件对象都会有 props 属性</li>
+<li>组件标签的所有属性都保存在 props 中</li>
+<li>用 props-type.js 对属性进行类型检测，必要性判断(React161 开始)</li>
+</ol>
+<h5 id="值得注意：-1"><a href="#值得注意：-1" class="headerlink" title="值得注意："></a>值得注意：</h5><blockquote>
+<ul>
+<li>组件内部的 props 是只读属性的</li>
+<li>有组件外向组件内传递变化的数据</li>
+</ul>
+</blockquote>
+<h3 id="4-组件实例的三大核心属性-3-refs-与事件处理"><a href="#4-组件实例的三大核心属性-3-refs-与事件处理" class="headerlink" title="4.组件实例的三大核心属性 3: refs 与事件处理"></a>4.组件实例的三大核心属性 3: refs 与事件处理</h3><h5 id="理解：-2"><a href="#理解：-2" class="headerlink" title="理解："></a>理解：</h5><blockquote>
+<p>Refs 提供了一种方式，允许我们访问 DOM 节点或在 render 方法中创建的 React 元素。</p>
+</blockquote>
+<h5 id="三种形式创建-ref"><a href="#三种形式创建-ref" class="headerlink" title="三种形式创建 ref:"></a>三种形式创建 ref:</h5><ol>
+<li><p>字符串形式的 ref</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">input ref=<span class="hljs-string">&quot;input1&quot;</span> type=<span class="hljs-string">&quot;text&quot;</span><br></code></pre></div></td></tr></table></figure></li>
+<li><p>回调形式的 ref</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">input ref=&#123;<span class="hljs-function">(<span class="hljs-params">a</span>)=&gt;</span><span class="hljs-variable language_">this</span>.<span class="hljs-property">input1</span> = a&#125; type=<span class="hljs-string">&quot;text&quot;</span><br></code></pre></div></td></tr></table></figure></li>
+<li><p>createRef 创建 ref 容器</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">input2 = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">createRef</span>()<br>input ref=&#123;<span class="hljs-variable language_">this</span>.<span class="hljs-property">input1</span>&#125; type=<span class="hljs-string">&quot;text&quot;</span><br></code></pre></div></td></tr></table></figure></li>
+</ol>
+<h5 id="事件处理："><a href="#事件处理：" class="headerlink" title="事件处理："></a>事件处理：</h5><ol>
+<li>通过 onXxx 属性指定事件处理函数（注意大小写）<ul>
+<li>React 使用的式自定义(合成)事件，而不是原生的 DOM 事件–更好兼容性</li>
+<li>React 中的事件通过委托方式处理的（委托给组件最外层的元素）–更高的效率</li>
+</ul>
+</li>
+<li>通过 event.target 得到发生事件的 DOM 对象</li>
+</ol>
+<h3 id="5-组件的生命周期："><a href="#5-组件的生命周期：" class="headerlink" title="5.组件的生命周期："></a>5.组件的生命周期：</h3><h5 id="旧版本的生命周期："><a href="#旧版本的生命周期：" class="headerlink" title="旧版本的生命周期："></a>旧版本的生命周期：</h5><p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220112113749152.png" srcset="/img/loading.gif" lazyload alt="image-20220112113749152"></p>
+<h6 id="生命周期的三个阶段（旧）："><a href="#生命周期的三个阶段（旧）：" class="headerlink" title="生命周期的三个阶段（旧）："></a>生命周期的三个阶段（旧）：</h6><p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220112114024249.png" srcset="/img/loading.gif" lazyload alt="image-20220112114024249"></p>
+<h5 id="新版本生命周期（-gt-v17-0-0）："><a href="#新版本生命周期（-gt-v17-0-0）：" class="headerlink" title="新版本生命周期（&gt;v17.0.0）："></a>新版本生命周期（&gt;v17.0.0）：</h5><p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220112140120136.png" srcset="/img/loading.gif" lazyload alt="image-20220112140120136"></p>
+<h6 id="新增生命钩子（2-个）："><a href="#新增生命钩子（2-个）：" class="headerlink" title="新增生命钩子（2 个）："></a>新增生命钩子（2 个）：</h6><blockquote>
+<p>getDerivedStateFromProps：此方法适用于<a target="_blank" rel="noopener" href="https://zh-hans.reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#when-to-use-derived-state">罕见的用例</a>，即 state 的值在任何时候都取决于 props。</p>
+<p>getSnapshotBeforeUpdate()：它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）。此生命周期方法的任何返回值将作为参数传递给 <code>componentDidUpdate()</code>。</p>
+</blockquote>
+<h6 id="即将废弃生命钩子（三个）：均需在前面加上-UNSAFE-前缀"><a href="#即将废弃生命钩子（三个）：均需在前面加上-UNSAFE-前缀" class="headerlink" title="即将废弃生命钩子（三个）：均需在前面加上 UNSAFE_ (前缀)"></a>即将废弃生命钩子（三个）：均需在前面加上 UNSAFE_ (前缀)</h6><ul>
+<li>componentWillMount（）</li>
+<li>componentWillUpdate（）</li>
+<li>componentWillReceiveProps（）</li>
+</ul>
+<h3 id="6-虚拟-DOM，diff-算法："><a href="#6-虚拟-DOM，diff-算法：" class="headerlink" title="6.虚拟 DOM，diff 算法："></a>6.虚拟 DOM，diff 算法：</h3><p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220112161357938.png" srcset="/img/loading.gif" lazyload alt="image-20220112161357938"></p>
+<h2 id="三-React-ajax"><a href="#三-React-ajax" class="headerlink" title="三.React ajax"></a>三.React ajax</h2><h3 id="1-react-脚手架配置代理总结"><a href="#1-react-脚手架配置代理总结" class="headerlink" title="1.react 脚手架配置代理总结"></a>1.react 脚手架配置代理总结</h3><h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220113230205483.png" srcset="/img/loading.gif" lazyload alt="image-20220113230205483"></p>
+<h4 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h4><blockquote>
+<p>注意从 http-proxy-middleware v2.0 开始使用 createProxyMiddleware 代替 proxy</p>
+<p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220113230149722.png" srcset="/img/loading.gif" lazyload alt="image-20220113230149722"></p>
+</blockquote>
+<h3 id="2-xhr（axios）-和-fetch-的区别"><a href="#2-xhr（axios）-和-fetch-的区别" class="headerlink" title="2.xhr（axios） 和 fetch 的区别"></a>2.xhr（axios） 和 fetch 的区别</h3><blockquote>
+<p><strong>xhr 与 fetch 是同一级别的 ！！！</strong></p>
+</blockquote>
+<h5 id="1-传统的-xhr-请求"><a href="#1-传统的-xhr-请求" class="headerlink" title="1.传统的 xhr 请求"></a>1.传统的 xhr 请求</h5><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>()<br>xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, url)<br>xhr.<span class="hljs-property">responseType</span> = <span class="hljs-string">&#x27;json&#x27;</span><br><br>xhr.<span class="hljs-property">onload</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(xhr.<span class="hljs-property">response</span>)<br>&#125;<br><br>xhr.<span class="hljs-property">onerror</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Oops, error&#x27;</span>)<br>&#125;<br><br>xhr.<span class="hljs-title function_">send</span>()<br></code></pre></div></td></tr></table></figure>
+
+<h5 id="2-未优化的-fetch-请求"><a href="#2-未优化的-fetch-请求" class="headerlink" title="2.未优化的 fetch 请求"></a>2.未优化的 fetch 请求</h5><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-title function_">fetch</span>(url)<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) &#123;<br>    <span class="hljs-keyword">return</span> response.<span class="hljs-title function_">json</span>()<br>  &#125;)<br>  .<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data)<br>  &#125;)<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Oops, error&#x27;</span>)<br>  &#125;)<br></code></pre></div></td></tr></table></figure>
+
+<h5 id="3-优化后的-fetch-请求"><a href="#3-优化后的-fetch-请求" class="headerlink" title="3.优化后的 fetch 请求"></a>3.优化后的 fetch 请求</h5><figure class="highlight javascript"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs javascript"><span class="hljs-keyword">try</span> &#123;<br>  <span class="hljs-keyword">let</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(url)<br>  <span class="hljs-keyword">let</span> data = <span class="hljs-keyword">await</span> response.<span class="hljs-title function_">json</span>()<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data)<br>&#125; <span class="hljs-keyword">catch</span> (e) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Oops, error&#x27;</span>, e)<br>&#125;<br><span class="hljs-comment">// 注：这段代码如果想运行，外面需要包一个 async function</span><br></code></pre></div></td></tr></table></figure>
+
+<h3 id="3-PubSubJs-消息订阅-与-发布机制"><a href="#3-PubSubJs-消息订阅-与-发布机制" class="headerlink" title="3.PubSubJs 消息订阅 与 发布机制"></a>3.PubSubJs 消息订阅 与 发布机制</h3><p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220114154029332.png" srcset="/img/loading.gif" lazyload alt="image-20220114154029332"></p>
+<h5 id="使用过程："><a href="#使用过程：" class="headerlink" title="使用过程："></a>使用过程：</h5><p>导入 pubsub.js 模块</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-title class_">PubSub</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;pubsub-js&#x27;</span><br></code></pre></div></td></tr></table></figure>
+
+<p>在需要 消息订阅 的组件，订阅</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">var</span> token = <span class="hljs-title class_">PubSub</span>.<span class="hljs-title function_">subscribe</span>(<span class="hljs-string">&#x27;MY TOPIC&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">msg, data</span>) =&gt;</span> &#123;&#125;)<br></code></pre></div></td></tr></table></figure>
+
+<p>在需要 发布 组件中，发布消息（msg:消息，data:数据）</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-title class_">PubSub</span>.<span class="hljs-title function_">publish</span>(<span class="hljs-string">&#x27;MY TOPIC&#x27;</span>, <span class="hljs-string">&#x27;hello world!&#x27;</span>)<br></code></pre></div></td></tr></table></figure>
+
+<p>消息订阅的组件待销毁后，取消订阅</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-title class_">PubSub</span>.<span class="hljs-title function_">unsubscribe</span>(token)<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="四-React-路由"><a href="#四-React-路由" class="headerlink" title="四.React 路由"></a>四.React 路由</h2><h3 id="1-Spa-理解"><a href="#1-Spa-理解" class="headerlink" title="1.Spa 理解"></a>1.Spa 理解</h3><p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220114155209771.png" srcset="/img/loading.gif" lazyload alt="image-20220114155209771"></p>
+<h3 id="2-路由的理解"><a href="#2-路由的理解" class="headerlink" title="2.路由的理解"></a>2.路由的理解</h3><ol>
+<li><p>什么是路由？</p>
+<p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220114155416804.png" srcset="/img/loading.gif" lazyload alt="image-20220114155416804"></p>
+</li>
+<li><p>路由分类</p>
+<ul>
+<li><p>后端路由</p>
+<p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220114160524889.png" srcset="/img/loading.gif" lazyload alt="image-20220114160524889"></p>
+</li>
+<li><p>前端路由</p>
+<p>方式一：H5 推出来的 history 模式(旧的浏览器不兼容)</p>
+<p>方式二：hash 值（锚点）</p>
+<p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220114160544635.png" srcset="/img/loading.gif" lazyload alt="image-20220114160544635"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-路由基本使用："><a href="#3-路由基本使用：" class="headerlink" title="3.路由基本使用："></a>3.路由基本使用：</h3><h2 id="五-Redux-状态管理"><a href="#五-Redux-状态管理" class="headerlink" title="五.Redux 状态管理"></a>五.Redux 状态管理</h2><h3 id="1-redux-原理图"><a href="#1-redux-原理图" class="headerlink" title="1.redux 原理图"></a>1.redux 原理图</h3><p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220126180325926.png" srcset="/img/loading.gif" lazyload alt="image-20220126180325926"></p>
+<h2 id="2-react-redux-原理图"><a href="#2-react-redux-原理图" class="headerlink" title="2.react-redux 原理图"></a>2.react-redux 原理图</h2><p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220126180413848.png" srcset="/img/loading.gif" lazyload alt="image-20220126180413848"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/React/">React</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/React/">React</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/18/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96--%E6%89%B9%E9%87%8F%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97/">
+                        <span class="hidden-mobile">前端工程化--批量导入模块</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
