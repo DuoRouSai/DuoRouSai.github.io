@@ -16,19 +16,40 @@
   <meta name="author" content="DuoRouSai">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="website">
-<meta property="og:title" content="归档">
-<meta property="og:url" content="http://example.com/archives/2022/03/index.html">
+    <meta name="description" content="刚看官方文档的时候。也许会觉得他们很像，或者认为&#96;useCallback&#96; 是 &#96;useMemo&#96;的语法糖🍬,其实不然，他们虽然说都是 “性能优化” 的手段，他们的用法和关注层面还是有点不一样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="useCallback 和 useMemo 的区别">
+<meta property="og:url" content="http://example.com/2022/03/28/useCallback%20%E5%92%8C%20useMemo%20%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="刚看官方文档的时候。也许会觉得他们很像，或者认为&#96;useCallback&#96; 是 &#96;useMemo&#96;的语法糖🍬,其实不然，他们虽然说都是 “性能优化” 的手段，他们的用法和关注层面还是有点不一样">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-28T15:38:19.105Z">
+<meta property="article:modified_time" content="2022-03-28T15:40:43.946Z">
 <meta property="article:author" content="DuoRouSai">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="hook">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>归档 - Hexo</title>
+  <title>useCallback 和 useMemo 的区别 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -55,7 +76,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -156,9 +177,43 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="useCallback 和 useMemo 的区别">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-03-28 23:38" pubdate>
+        2022年3月28日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      390 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      4 分钟
+    </span>
+  
+
+  
+  
+</div>
 
             
           </div>
@@ -171,100 +226,111 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 16 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2022</p>
-    
-    <a href="/2022/03/28/Typora%20%E5%B0%8F%E5%A6%99%E6%8B%9B%20--%20%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Typora 小妙招 -- 图片服务器😊</span>
-      <time style="float: right;">03-28</time>
-    </a>
-  
-    
-    <a href="/2022/03/28/stopPropagation%20%E5%92%8C%20stopImmediatePropagation%E5%8C%BA%E5%88%AB/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">stopPropagation 和 stopImmediatePropagation区别✌️</span>
-      <time style="float: right;">03-28</time>
-    </a>
-  
-    
-    <a href="/2022/03/28/useCallback%20%E5%92%8C%20useMemo%20%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">useCallback 和 useMemo 的区别</span>
-      <time style="float: right;">03-28</time>
-    </a>
-  
-    
-    <a href="/2022/03/28/%E8%87%AA%E5%AE%9A%E4%B9%89%20hooks%20%E5%92%8C%20%E5%B0%81%E8%A3%85%E7%BB%84%E4%BB%B6/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">自定义 Hook 和 封装组件</span>
-      <time style="float: right;">03-28</time>
-    </a>
-  
-    
-    <a href="/2022/03/28/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80%E5%B0%8F%E5%AE%9E%E8%B7%B5%20--Rem%20%E5%92%8C%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">响应式布局小实践 --Rem 和媒体查询</span>
-      <time style="float: right;">03-28</time>
-    </a>
-  
-    
-    <a href="/2022/03/28/Gird%20%E7%BD%91%E6%A0%BC%E5%B8%83%E5%B1%80/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Gird 网格布局</span>
-      <time style="float: right;">03-28</time>
-    </a>
-  
-    
-    <a href="/2022/03/28/%E5%90%AC%E8%AF%B4%E4%BD%A0%E8%BF%98%E4%B8%8D%E4%BC%9A%E2%80%9C%E8%99%9A%E6%8B%9F%E5%88%97%E8%A1%A8%E2%80%9D%EF%BC%8C%E5%AF%B9%E4%B8%8D%E8%B5%B7%E6%88%91%E6%9D%A5%E6%99%9A%E4%BA%86/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">听说你还不会“虚拟列表”，对不起我来晚了</span>
-      <time style="float: right;">03-28</time>
-    </a>
-  
-    
-    <a href="/2022/03/28/useThrottle%20hook%20%E7%9A%84%E5%B0%81%E8%A3%85/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">useThrottle hook节流</span>
-      <time style="float: right;">03-28</time>
-    </a>
-  
-    
-    <a href="/2022/03/18/React%20of%20Study/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">React of Study</span>
-      <time style="float: right;">03-18</time>
-    </a>
-  
-    
-    <a href="/2022/03/18/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96--%E6%89%B9%E9%87%8F%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">前端工程化--批量导入模块</span>
-      <time style="float: right;">03-18</time>
-    </a>
-  
-</div>
 
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">useCallback 和 useMemo 的区别</h1>
+            
+            <div class="markdown-body">
+              <h2 id="useCallback-和-useMemo-的区别"><a href="#useCallback-和-useMemo-的区别" class="headerlink" title="useCallback 和 useMemo 的区别"></a>useCallback 和 useMemo 的区别</h2><blockquote>
+<p>前言，刚看官方文档的时候。也许会觉得他们很像，或者认为<code>useCallback</code> 是 <code>useMemo</code>的语法糖 🍬</p>
+<p>其实不然，他们虽然说都是 “性能优化” 的手段，他们的用法和关注层面还是有点不一样</p>
+</blockquote>
+<h3 id="01-useCallback"><a href="#01-useCallback" class="headerlink" title="01 useCallback"></a>01 useCallback</h3><p><strong>用法：</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> memoizedCallback = <span class="hljs-title function_">useCallback</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-title function_">doSomething</span>(a, b)<br>&#125;, [a, b])<br></code></pre></div></td></tr></table></figure>
 
-  <nav aria-label="navigation">
-    <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2022/03/page/2/#board">2</a><a class="extend next" rel="next" href="/archives/2022/03/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
-    </span>
-  </nav>
+<p><code>useCallback(fn, deps)</code> 相当于 <code>useMemo(() =&gt; fn, deps)</code></p>
+<p><strong>关注：</strong></p>
+<p><code>useCallback</code> 一般用于函数更新，返回一个新的方法</p>
+<h3 id="02-useMemo"><a href="#02-useMemo" class="headerlink" title="02 useMemo"></a>02 useMemo</h3><p><strong>用法：</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> memoizedValue = <span class="hljs-title function_">useMemo</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">computeExpensiveValue</span>(a, b), [a, b])<br></code></pre></div></td></tr></table></figure>
 
+<p><strong>关注：</strong></p>
+<p><code>useMemo</code> 一般用于组件中变量，返回变量值</p>
 
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/hook/">hook</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/React/">React</a>
+                    
+                      <a class="hover-with-bg" href="/tags/hook/">hook</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/28/stopPropagation%20%E5%92%8C%20stopImmediatePropagation%E5%8C%BA%E5%88%AB/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">stopPropagation 和 stopImmediatePropagation区别✌️</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/28/%E8%87%AA%E5%AE%9A%E4%B9%89%20hooks%20%E5%92%8C%20%E5%B0%81%E8%A3%85%E7%BB%84%E4%BB%B6/">
+                        <span class="hidden-mobile">自定义 Hook 和 封装组件</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -347,6 +413,19 @@
   
 
 
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
 
 
 
