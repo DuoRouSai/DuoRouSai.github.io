@@ -16,27 +16,21 @@
   <meta name="author" content="DuoRouSai">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Typora 是当今程序猿笔记利器，当我们需要插图片在笔记中，保存其实是本地图片。一旦你上传到自己播客上面，就会发现图片显示不出来，非常麻烦。这边教大家配置一个图片服务器，使用 sm.ms 作为图床">
+    <meta name="description" content="前言，你真的了解 Hooks 么? 今天看了一篇关于 Hooks 使用误区的一篇文章，ahooks 的作者从特别的角度，带我们重新认识 Hooks">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Typora 小妙招 -- 图片服务器😊">
-<meta property="og:url" content="http://example.com/2022/03/28/Typora%20%E5%B0%8F%E5%A6%99%E6%8B%9B%20--%20%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
+<meta property="og:title" content="如何正确姿势使用 Hooks 优化性能? 🤔">
+<meta property="og:url" content="http://example.com/2022/04/20/%E5%85%B3%E4%BA%8E%20React%20Hook%20%E6%80%9D%E8%80%83%E7%9A%84%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Typora 是当今程序猿笔记利器，当我们需要插图片在笔记中，保存其实是本地图片。一旦你上传到自己播客上面，就会发现图片显示不出来，非常麻烦。这边教大家配置一个图片服务器，使用 sm.ms 作为图床">
+<meta property="og:description" content="前言，你真的了解 Hooks 么? 今天看了一篇关于 Hooks 使用误区的一篇文章，ahooks 的作者从特别的角度，带我们重新认识 Hooks">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s2.loli.net/2022/03/17/Ym7XfbrlZVjdEhv.png">
-<meta property="og:image" content="https://s2.loli.net/2022/03/17/m4aX9PZvYwbc5lS.png">
-<meta property="og:image" content="c:/Users/DuoRouSai/AppData/Roaming/Typora/typora-user-images/image-20220317225444609.png">
-<meta property="og:image" content="https://s2.loli.net/2022/03/17/TdfZnEJyoaIXHVm.png">
-<meta property="og:image" content="https://s2.loli.net/2022/03/17/xMtPjqCZ7mfJiAU.png">
-<meta property="og:image" content="http://example.com/2022/03/28/AppData/Roaming/Typora/typora-user-images/image-20220318141602372.png">
-<meta property="article:published_time" content="2022-03-28T15:38:19.116Z">
-<meta property="article:modified_time" content="2022-03-28T15:50:34.984Z">
+<meta property="article:published_time" content="2022-04-20T01:28:15.333Z">
+<meta property="article:modified_time" content="2022-04-20T01:29:00.282Z">
 <meta property="article:author" content="DuoRouSai">
+<meta property="article:tag" content="Hook">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://s2.loli.net/2022/03/17/Ym7XfbrlZVjdEhv.png">
   
   
-  <title>Typora 小妙招 -- 图片服务器😊 - Hexo</title>
+  <title>如何正确姿势使用 Hooks 优化性能? 🤔 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,7 +176,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Typora 小妙招 -- 图片服务器😊">
+            <span class="h2" id="subtitle" title="如何正确姿势使用 Hooks 优化性能? 🤔">
               
             </span>
 
@@ -192,8 +186,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-03-28 23:38" pubdate>
-        2022年3月28日 晚上
+      <time datetime="2022-04-20 09:28" pubdate>
+        2022年4月20日 上午
       </time>
     </span>
   
@@ -203,7 +197,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      655 字
+      1.1k 字
     </span>
   
 
@@ -212,7 +206,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      10 分钟
     </span>
   
 
@@ -241,40 +235,53 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Typora 小妙招 -- 图片服务器😊</h1>
+            <h1 style="display: none">如何正确姿势使用 Hooks 优化性能? 🤔</h1>
             
             <div class="markdown-body">
-              <h2 id="Typora-小妙招-–-图片服务器-😊"><a href="#Typora-小妙招-–-图片服务器-😊" class="headerlink" title="Typora 小妙招 – 图片服务器 😊"></a>Typora 小妙招 – 图片服务器 😊</h2><h3 id="01-前言"><a href="#01-前言" class="headerlink" title="01 前言"></a>01 前言</h3><p><code>Typora</code> 是当今程序猿笔记利器，当我们需要插图片在笔记中，保存其实是本地图片。一旦你上传到自己播客上面，就会发现图片显示不出来，非常麻烦。这边教大家配置一个图片服务器，使用 <code>sm.ms</code> 作为图床</p>
-<blockquote>
-<p>Typora V0.11.17</p>
+              <h2 id="如何正确姿势使用-Hooks-优化性能-🤔"><a href="#如何正确姿势使用-Hooks-优化性能-🤔" class="headerlink" title="如何正确姿势使用 Hooks 优化性能? 🤔"></a>如何正确姿势使用 Hooks 优化性能? 🤔</h2><blockquote>
+<p>前言，你真的了解 Hooks 么? 今天看了一篇关于 Hooks 使用误区的一篇文章，ahooks 的作者从特别的角度，带我们重新认识 Hooks</p>
 </blockquote>
-<h3 id="02-教程"><a href="#02-教程" class="headerlink" title="02 教程"></a>02 教程</h3><p>选择 sm.ms 作为图床,官网地址：<a target="_blank" rel="noopener" href="https://sm.ms/">https://sm.ms</a></p>
-<p>特点：永久存储免注册，图片链接支持 https，可以删除上传的图片，提供多种图片链接格式，目前免费用户无法使用香港节点因此速度比较慢，有时候可能上传失败。</p>
-<p>图片上传限制：每个图片最大 5M，每次最多上传 10 张</p>
-<ol>
-<li><p>注册或登陆 sm.ms</p>
-<p>​ <a target="_blank" rel="noopener" href="https://sm.ms/login">https://sm.ms/login</a></p>
-</li>
-<li><p>生成 token</p>
-<p><img src="https://s2.loli.net/2022/03/17/Ym7XfbrlZVjdEhv.png" srcset="/img/loading.gif" lazyload alt="image-20220317225046857"></p>
-</li>
-<li><p>配置 token</p>
-<p>进入<a target="_blank" rel="noopener" href="https://sm.ms/home/apitoken">API Access - SM.MS | Dashboard</a></p>
-<p><img src="https://s2.loli.net/2022/03/17/m4aX9PZvYwbc5lS.png" srcset="/img/loading.gif" lazyload alt="image-20220317225253731"></p>
-<p>回到 Typora 配置</p>
-<p><img src="C:\Users\DuoRouSai\AppData\Roaming\Typora\typora-user-images\image-20220317225444609.png" srcset="/img/loading.gif" lazyload alt="image-20220317225444609"></p>
-<p>按照图片顺序，配置 config</p>
-<p><img src="https://s2.loli.net/2022/03/17/TdfZnEJyoaIXHVm.png" srcset="/img/loading.gif" lazyload alt="image-20220317225658734"></p>
-<figure class="highlight json"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;picBed&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;uploader&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;smms&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">//传图床为 SM.MS,</span><br>    <span class="hljs-attr">&quot;smms&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;token&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;xxxxxxxxxxxxxxxxxxxxx&quot;</span> <span class="hljs-comment">//这里面的token换成刚刚生成的 sm.ms 的token</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;picgoPlugins&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></div></td></tr></table></figure>
-
-<p>注意修改后重启软件 !!!</p>
-</li>
+<p>文章 Url: <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/UqdFCDwf5KN4oZ-XwcTBnA">React Hooks 使用误区，驳官方文档 (qq.com)</a></p>
+<h3 id="01-重新认识-Hooks"><a href="#01-重新认识-Hooks" class="headerlink" title="01 重新认识 Hooks"></a>01 重新认识 Hooks</h3><p>刚接触 <code>Hooks</code> 那会，大概看了下官方文档，官方一些 Hooks 可以用来优化性能，就屁颠屁颠到处使用 <code>useState</code>、<code>useMemo</code>、<code>useCallback</code> ，但是其实不然，<strong>优化性能这东西需要看场景的</strong>，并不是所有场景都适合得。例如，在很简单的基础类型计算时，可能 <code>useMemo</code> 并不划算，请问算 <code>a+b</code> 的消耗大？还是记录 <code>a/b</code> ，并比较<code>a/b</code> 是否变化的消耗大？反而还<strong>增加负担</strong>。</p>
+<h3 id="02-总结"><a href="#02-总结" class="headerlink" title="02 总结"></a>02 总结</h3><blockquote>
+<p>上面的文章，作者讲很详细了。这边主要对上面的文章进行一个总结，以便后面查看：</p>
+</blockquote>
+<ul>
+<li>Hooks 依赖，只有变化时，需要重新执行 useEffect 的变量，才要放到 deps 中。而不是 useEffect 用到的变量都放到 deps 中。</li>
+<li>deps 参数并不可以解决闭包问题，可以使用 <code>useRef</code><ul>
+<li>正常情况不会有闭包问题</li>
+<li>延迟调用会存在闭包问题<ol>
+<li>使用 <code>setTimeout</code>、<code>setInterval</code>、<code>Promise.then</code> 等</li>
+<li><code>useEffect</code> 的卸载函数</li>
 </ol>
-<p><strong>效果预览</strong>:</p>
-<p>将图片复制到 Typora ,就自动上传</p>
-<p><img src="https://s2.loli.net/2022/03/17/xMtPjqCZ7mfJiAU.png" srcset="/img/loading.gif" lazyload alt="image-20220317230130170"></p>
-<p><strong>大功告成！！！</strong> 💕</p>
-<p><img src="../AppData/Roaming/Typora/typora-user-images/image-20220318141602372.png" srcset="/img/loading.gif" lazyload alt="image-20220318141602372"></p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">// 通过 ref 来记忆最新的 count</span><br><span class="hljs-keyword">const</span> countRef = <span class="hljs-title function_">useRef</span>(count)<br>countRef.<span class="hljs-property">current</span> = count<br><br><span class="hljs-title function_">useEffect</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> timer = <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(countRef.<span class="hljs-property">current</span>)<br>  &#125;, <span class="hljs-number">3000</span>)<br>  <span class="hljs-keyword">return</span> <span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-built_in">clearTimeout</span>(timer)<br>  &#125;<br>&#125;, [])<br></code></pre></div></td></tr></table></figure>
+
+<ul>
+<li><p>不建议使用 <strong><code>useCallback</code></strong> ，是要和 <code>shouldComponentUpdate/React.memo</code> 配套使用的，除非有个别非常复杂的组件，单独使用即可。</p>
+</li>
+<li><p><strong><code>useMemo</code></strong> 建议大量使用，但并不是无节制的使用(简单基础运算)</p>
+</li>
+<li><p><strong><code>useState</code></strong> 的正确使用姿势</p>
+<ul>
+<li><p>能通过<code>state</code>或<code>prop</code> 计算，就不需要使用 <code>useState</code></p>
+</li>
+<li><p>保证数据源唯一</p>
+<ul>
+<li>不要既存在 <code>redux</code> 中，又在组件中定义了一个 <code>state</code> 存储。</li>
+<li>不要既存在父级组件中，又在当前组件中定义了一个 <code>state</code> 存储。</li>
+<li>不要既存在 <code>url query</code> 中，又在组件中定义了一个 <code>state</code> 存储。</li>
+</ul>
+</li>
+<li><p>​ <code>useState</code> 适当合并，不需要拆分过细，增加可读性</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="03-关于性能优化文章"><a href="#03-关于性能优化文章" class="headerlink" title="03 关于性能优化文章"></a>03 关于性能优化文章</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/nrX-tHSfWaSZJrUmYbPugQ">送给 React 开发者十九条性能优化建议 (qq.com)</a></p>
 
             </div>
             <hr>
@@ -284,10 +291,19 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Typora/">Typora</a>
+                      <a class="hover-with-bg" href="/categories/React/">React</a>
+                    
+                      <a class="hover-with-bg" href="/categories/React/Hook/">Hook</a>
                     
                   </div>
                 
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Hook/">Hook</a>
+                    
+                  </div>
                 
               </div>
               
@@ -302,9 +318,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/03/28/%E5%B0%81%E8%A3%85%E7%BB%84%E4%BB%B6%20--%20FileTable/">
+                      <a href="/2022/04/20/antd%20%E6%8C%89%E9%9C%80%E5%BC%95%E5%85%A5/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">封装组件 -- FileTable</span>
+                        <span class="hidden-mobile">antd 按需引入</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -312,8 +328,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/28/stopPropagation%20%E5%92%8C%20stopImmediatePropagation%E5%8C%BA%E5%88%AB/">
-                        <span class="hidden-mobile">stopPropagation 和 stopImmediatePropagation区别✌️</span>
+                      <a href="/2022/04/20/Nesj.js%20%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE/">
+                        <span class="hidden-mobile">Nest.js 环境变量配置</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
