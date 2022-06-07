@@ -1,0 +1,541 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/favicon.png">
+  <link rel="icon" href="/img/favicon/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="DuoRouSai">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="实现低代码操作流水记录，实现撤回重做的功能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅用高阶Redux原理实现日志流水--实现篇">
+<meta property="og:url" content="http://example.com/2022/06/07/%E6%B5%85%E7%94%A8%E9%AB%98%E9%98%B6Redux%E5%8E%9F%E7%90%86%E5%AE%9E%E7%8E%B0%E6%8F%92%E4%BB%B6%E5%BC%8F%E6%97%A5%E5%BF%97%E6%B5%81%E6%B0%B4--%E5%AE%9E%E7%8E%B0%E7%AF%87/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="实现低代码操作流水记录，实现撤回重做的功能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/05/14/9VacFp7rWzBhwgt.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/14/HQsproaURAPNFOt.png">
+<meta property="article:published_time" content="2022-06-07T14:59:24.240Z">
+<meta property="article:modified_time" content="2022-06-07T15:01:26.321Z">
+<meta property="article:author" content="DuoRouSai">
+<meta property="article:tag" content="Redux">
+<meta property="article:tag" content="实现日志流水">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2022/05/14/9VacFp7rWzBhwgt.png">
+  
+  
+  <title>浅用高阶Redux原理实现日志流水--实现篇 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DuoR</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="浅用高阶Redux原理实现日志流水--实现篇">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-07 22:59" pubdate>
+        2022年6月7日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      49 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">浅用高阶Redux原理实现日志流水--实现篇</h1>
+            
+            <div class="markdown-body">
+              <h2 id="浅用高阶-Redux-原理实现日志流水–实现篇"><a href="#浅用高阶-Redux-原理实现日志流水–实现篇" class="headerlink" title="浅用高阶 Redux 原理实现日志流水–实现篇"></a>浅用高阶 Redux 原理实现日志流水–实现篇</h2><blockquote>
+<p>Demo B 要实现低代码操作流水记录，实现撤回重做的功能，一开始的想法比较简单，直接在 action 中完善撤回重做功能，但是后面参考官方的 redux ，其实有个高级的写法，也就是高阶 Redux，可以实现可插件式的可撤退重做日志。具体高阶 Redux 介绍，可以移步到，文章：Redux 官方实现撤销重做 – 解析</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903921878564872#heading-8">Web 应用的撤销重做实现 - 掘金 (juejin.cn)</a></p>
+<p>​ <a target="_blank" rel="noopener" href="https://www.redux.org.cn/docs/recipes/ImplementingUndoHistory.html">实现撤销重做 · Redux</a></p>
+</blockquote>
+<h3 id="01-实现撤回重做的方案"><a href="#01-实现撤回重做的方案" class="headerlink" title="01 实现撤回重做的方案"></a>01 实现撤回重做的方案</h3><ul>
+<li><strong>数据快照式</strong>，也就是将每次操作完之后，数据状态进行保存，从而形成历史记录<ul>
+<li>优点：通用性广，实现容易，可封装成组件成可插拔插件</li>
+<li>缺点：假若数据结构复杂庞大，随着操作历史记录变多，导致数据量冗余，不太好管理</li>
+</ul>
+</li>
+<li><strong>路径新旧值式</strong>，单一数据源，对每次操作后，将操作数据的路径、新值和旧值作为记录进行保存<ul>
+<li>优点：只需记录操作路径和新旧值，减少大量的内存消耗，方便管理数据</li>
+<li>缺点：实现比较难， 需要对 action 的传入数据的结构有所要求（路径、新旧值）</li>
+</ul>
+</li>
+</ul>
+<p>下文将采用的是路劲新旧值式的方案</p>
+<h3 id="02-数据结构的设计"><a href="#02-数据结构的设计" class="headerlink" title="02 数据结构的设计"></a>02 数据结构的设计</h3><figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js">&#123;<br>  <span class="hljs-attr">histories</span>: [],<br>  <span class="hljs-attr">historyIndex</span>: -<span class="hljs-number">1</span>,<br>  <span class="hljs-attr">current</span>:&#123;&#125;<br>&#125;<br><br><span class="hljs-comment">// 例：histories存放一个更新操作</span><br>histories = [<br>    &#123;<br>        <span class="hljs-attr">path</span>:[<span class="hljs-string">&quot;state&quot;</span>,<span class="hljs-string">&quot;Data&quot;</span>,<span class="hljs-number">0</span>,<span class="hljs-string">&quot;name&quot;</span>],<br>        <span class="hljs-attr">newValue</span>: <span class="hljs-string">&quot;xiaoming&quot;</span>,<br>        <span class="hljs-attr">oldValue</span>: <span class="hljs-string">&quot;KK&quot;</span><br>    &#125;<br>]<br></code></pre></div></td></tr></table></figure>
+
+<p>其中，</p>
+<ul>
+<li><strong>histories:</strong> 用于存放记录数组</li>
+<li><strong>historyIndex：</strong> 游标，用于标识当前历史记录的指针</li>
+<li><strong>current：</strong>存放业务 reducer 返回最新的业务 state</li>
+</ul>
+<h3 id="03-撤销重做算法"><a href="#03-撤销重做算法" class="headerlink" title="03 撤销重做算法"></a>03 撤销重做算法</h3><h4 id="撤销-undo"><a href="#撤销-undo" class="headerlink" title="撤销 undo"></a>撤销 undo</h4><ul>
+<li>判断 <code>historyIndex</code> 的值，从而判断撤退进行到什么状态。<ul>
+<li>0 ，说明已经执行到栈底了</li>
+<li>-1，未发生撤退操作</li>
+<li><code>!= -1 &amp;&amp; != 0</code>，正在进行撤退操作</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://s2.loli.net/2022/05/14/9VacFp7rWzBhwgt.png" srcset="/img/loading.gif" lazyload alt="image-20220514111615614"></p>
+<ul>
+<li>执行撤回操作<ul>
+<li>若 <code>newValue === null</code>， 为删除操作，对应撤回操作 =&gt; 新增操作</li>
+<li>若 <code>oldValue === null</code>， 为新增操作，对应撤回操作 =&gt; 删除操作</li>
+<li>若 <code>newValue !== null &amp;&amp; oldValue !== null</code> ,为更新操作，对应撤回操作 =&gt; 更新操作</li>
+</ul>
+</li>
+</ul>
+<h4 id="重做-redo"><a href="#重做-redo" class="headerlink" title="重做 redo"></a>重做 redo</h4><ul>
+<li><p>判断 <code>historyIndex</code> 的值，是否已经发生撤回操作</p>
+<p><img src="https://s2.loli.net/2022/05/14/HQsproaURAPNFOt.png" srcset="/img/loading.gif" lazyload alt="image-20220514113531299"></p>
+</li>
+<li><p>执行重做操作</p>
+<ul>
+<li>若 <code>newValue === null</code>， 为删除操作，对应重做操作 =&gt; 删除操作</li>
+<li>若 <code>oldValue === null</code>， 为新增操作，对应撤重回操作 =&gt;新增操作</li>
+<li>若 <code>newValue !== null &amp;&amp; oldValue !== null</code> ,为更新操作，对应重做操作 =&gt; 更新操作</li>
+</ul>
+</li>
+<li><p>最后，判断 <code>historyIndex</code> 是否到达栈顶</p>
+<ul>
+<li>到达栈顶，重置游标<code>historyIndex = -1</code></li>
+<li>未到达栈顶，<code>historyIndex ++1</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="其他业务-Action"><a href="#其他业务-Action" class="headerlink" title="其他业务 Action"></a>其他业务 Action</h4><ul>
+<li><p>特殊情况：当在发生撤退重做时，若发生其他业务 Action 操作，应该把当前游标后面的记录清空，并推入新的业务 Action 操作</p>
+</li>
+<li><p>执行其他业务的 Action，委托给业务的 reducer 进行处理，并将业务 reducer 返回新的 业务 state 存储到 current</p>
+</li>
+<li><p>高阶 reducer 接收 <code>include</code> 数组参数，用于判断是否将这个操作加入撤退重做记录中</p>
+<ul>
+<li>属于，将其封装成记录，并推入 <code>histories</code></li>
+<li>不属于，无处理</li>
+</ul>
+</li>
+<li><p>额外操作：当高阶 reducer 接收 <code>limit</code> 参数，用于限制记录的最大长度</p>
+<ul>
+<li>默认, <code>limit = false</code>，不进行记录长度的限制</li>
+<li>limit 为数字，且大于 0。对记录进行限制</li>
+</ul>
+</li>
+</ul>
+<h3 id="03-实现源码"><a href="#03-实现源码" class="headerlink" title="03 实现源码"></a>03 实现源码</h3><figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">import</span> _ <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;lodash&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">undoReducerEnhancer</span>(<span class="hljs-params"></span><br><span class="hljs-params">  reducer,</span><br><span class="hljs-params">  &#123;</span><br><span class="hljs-params">    limit = <span class="hljs-literal">false</span>, // 日志流水最大长度</span><br><span class="hljs-params">    undoType = <span class="hljs-string">&#x27;UNDO&#x27;</span>, // 撤销操作类型</span><br><span class="hljs-params">    redoType = <span class="hljs-string">&#x27;REDO&#x27;</span>, // 重做操作类型</span><br><span class="hljs-params">    include = [], // 需要加入日志流水的操作类型</span><br><span class="hljs-params">  &#125;</span><br><span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">//  以一个空的 action 调用 reducer，来初始化 state</span><br>  <span class="hljs-keyword">const</span> initialState = &#123;<br>    <span class="hljs-attr">histories</span>: [], <span class="hljs-comment">//日志流水数组</span><br>    <span class="hljs-attr">historyIndex</span>: -<span class="hljs-number">1</span>, <span class="hljs-comment">// 游标, -1: 说明是第一次撤销</span><br>    <span class="hljs-comment">// eslint-disable-next-line no-undefined</span><br>    <span class="hljs-attr">current</span>: <span class="hljs-title function_">reducer</span>(<span class="hljs-literal">undefined</span>, &#123;&#125;), <span class="hljs-comment">// 当前状态</span><br>  &#125;<br><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">Add</span> = (<span class="hljs-params">list = [], &#123; path, newValue &#125;</span>) =&gt; &#123;<br>    <span class="hljs-keyword">let</span> newList = _.<span class="hljs-title function_">cloneDeep</span>(list)<br><br>    <span class="hljs-comment">// 需要存放的目标数组</span><br>    <span class="hljs-keyword">const</span> target = path.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, path.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>)<br><br>    <span class="hljs-comment">// 需要存放的目标数组的游标</span><br>    <span class="hljs-keyword">const</span> targetIndex = path[path.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">const</span> newTarget = _.<span class="hljs-title function_">get</span>(newList, target)<br>    newTarget.<span class="hljs-title function_">splice</span>(targetIndex, <span class="hljs-number">0</span>, newValue)<br>    newList = _.<span class="hljs-title function_">set</span>(newList, target, newTarget)<br>    <span class="hljs-keyword">return</span> newList<br>  &#125;<br><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">Update</span> = (<span class="hljs-params">list = [], &#123; path = [], newValue &#125;</span>) =&gt; &#123;<br>    <span class="hljs-comment">// 需要存放的目标数组</span><br>    <span class="hljs-keyword">let</span> newList = _.<span class="hljs-title function_">cloneDeep</span>(list)<br><br>    <span class="hljs-comment">// path 路径为空， 修改就是当前对象</span><br>    <span class="hljs-keyword">if</span> (path.<span class="hljs-property">length</span> !== <span class="hljs-number">0</span>) &#123;<br>      newList = _.<span class="hljs-title function_">set</span>(newList, path, newValue)<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      newList = newValue<br>    &#125;<br>    <span class="hljs-keyword">return</span> newList<br>  &#125;<br><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">Delete</span> = (<span class="hljs-params">list = [], &#123; path &#125;</span>) =&gt; &#123;<br>    <span class="hljs-keyword">let</span> newList = _.<span class="hljs-title function_">cloneDeep</span>(list)<br><br>    <span class="hljs-comment">// 需要存放的目标数组</span><br>    <span class="hljs-keyword">const</span> target = path.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, path.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>)<br><br>    <span class="hljs-comment">// 需要存放的目标数组的游标</span><br>    <span class="hljs-keyword">const</span> targetIndex = path[path.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">let</span> newTarget = _.<span class="hljs-title function_">get</span>(newList, target)<br>    newTarget.<span class="hljs-title function_">splice</span>(targetIndex, <span class="hljs-number">1</span>)<br>    newList = _.<span class="hljs-title function_">set</span>(newList, target, newTarget)<br>    <span class="hljs-keyword">return</span> newList<br>  &#125;<br><br>  <span class="hljs-comment">// 根据判断是否加入撤销重做流水操作</span><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">isInclude</span> = (<span class="hljs-params">actionType</span>) =&gt;<br>    include.<span class="hljs-title function_">indexOf</span>(actionType) === -<span class="hljs-number">1</span> ? <span class="hljs-literal">false</span> : <span class="hljs-literal">true</span><br><br>  <span class="hljs-comment">// 返回一个可撤销和重做的新的 reducer</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">state = initialState, action</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">const</span> &#123; histories, historyIndex &#125; = state<br><br>    <span class="hljs-comment">// 撤销操作</span><br>    <span class="hljs-keyword">if</span> (action.<span class="hljs-property">type</span> === undoType) &#123;<br>      <span class="hljs-keyword">if</span> (historyIndex === -<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 第一次撤退</span><br>        state.<span class="hljs-property">historyIndex</span> = histories.<span class="hljs-property">length</span> - <span class="hljs-number">1</span><br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (historyIndex &gt; <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">// 非第一次撤退</span><br>        state.<span class="hljs-property">historyIndex</span>--<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// 撤退end,返回</span><br>        <span class="hljs-keyword">return</span> state<br>      &#125;<br><br>      <span class="hljs-comment">// 执行撤退操作</span><br>      <span class="hljs-keyword">const</span> &#123; path, newValue, oldValue &#125; = histories[state.<span class="hljs-property">historyIndex</span>]<br>      <span class="hljs-keyword">if</span> (newValue === <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-comment">// 删除操作 =&gt; 新增操作</span><br>        state.<span class="hljs-property">current</span> = <span class="hljs-title class_">Add</span>(state.<span class="hljs-property">current</span>, &#123; path, <span class="hljs-attr">newValue</span>: oldValue &#125;)<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (oldValue === <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-comment">// 新增操作 =&gt; 删除操作</span><br>        state.<span class="hljs-property">current</span> = <span class="hljs-title class_">Delete</span>(state.<span class="hljs-property">current</span>, &#123; path &#125;)<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// 更新操作 =&gt; 更新操作</span><br>        state.<span class="hljs-property">current</span> = <span class="hljs-title class_">Update</span>(state.<span class="hljs-property">current</span>, &#123; path, <span class="hljs-attr">newValue</span>: oldValue &#125;)<br>      &#125;<br>      <span class="hljs-keyword">return</span> _.<span class="hljs-title function_">cloneDeep</span>(state)<br>    &#125;<br><br>    <span class="hljs-comment">// 重做操作</span><br>    <span class="hljs-keyword">if</span> (action.<span class="hljs-property">type</span> === redoType) &#123;<br>      <span class="hljs-keyword">if</span> (historyIndex === -<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 未发生撤销</span><br>        <span class="hljs-keyword">return</span> state<br>      &#125;<br><br>      <span class="hljs-comment">// 执行重做操作</span><br>      <span class="hljs-keyword">const</span> &#123; path, newValue, oldValue &#125; = histories[state.<span class="hljs-property">historyIndex</span>]<br>      <span class="hljs-keyword">if</span> (newValue === <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-comment">// 删除操作 =&gt; 删除操作</span><br>        state.<span class="hljs-property">current</span> = <span class="hljs-title class_">Delete</span>(state.<span class="hljs-property">current</span>, &#123; path &#125;)<br>      &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (oldValue === <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-comment">// 新增操作 =&gt; 新增操作</span><br>        state.<span class="hljs-property">current</span> = <span class="hljs-title class_">Add</span>(state.<span class="hljs-property">current</span>, &#123; path, newValue &#125;)<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// 更新操作 =&gt; 更新操作</span><br>        state.<span class="hljs-property">current</span> = <span class="hljs-title class_">Update</span>(state.<span class="hljs-property">current</span>, &#123; path, newValue &#125;)<br>      &#125;<br><br>      <span class="hljs-keyword">if</span> (state.<span class="hljs-property">historyIndex</span> &lt; histories.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// 继续重做</span><br>        state.<span class="hljs-property">historyIndex</span>++<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">// 重做end,返回</span><br>        state.<span class="hljs-property">historyIndex</span> = -<span class="hljs-number">1</span><br>      &#125;<br>      <span class="hljs-keyword">return</span> _.<span class="hljs-title function_">cloneDeep</span>(state)<br>    &#125;<br><br>    <span class="hljs-comment">// 其他业务操作, 委托给业务reducer处理</span><br>    <span class="hljs-comment">// 特殊情况：打断撤销重做操作，清空 historyIndex 后面所有操作流水,并置 historyIndex 为 -1</span><br>    <span class="hljs-keyword">if</span> (state.<span class="hljs-property">historyIndex</span> !== -<span class="hljs-number">1</span>) &#123;<br>      state.<span class="hljs-property">histories</span> = state.<span class="hljs-property">histories</span>.<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, state.<span class="hljs-property">historyIndex</span>)<br>      state.<span class="hljs-property">historyIndex</span> = -<span class="hljs-number">1</span><br>    &#125;<br>    <span class="hljs-keyword">const</span> newState = <span class="hljs-title function_">reducer</span>(state.<span class="hljs-property">current</span>, action)<br>    state.<span class="hljs-property">current</span> = newState<br><br>    <span class="hljs-comment">// 如果是 actonType 是属于 Include ，则加入撤销重做流水</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-title function_">isInclude</span>(action.<span class="hljs-property">type</span>)) &#123;<br>      state.<span class="hljs-property">histories</span>.<span class="hljs-title function_">push</span>(&#123;<br>        <span class="hljs-attr">type</span>: action.<span class="hljs-property">type</span>,<br>        ...action.<span class="hljs-property">payload</span>,<br>      &#125;)<br>    &#125;<br><br>    <span class="hljs-comment">// 当流水长度超过了 limit 长度时</span><br>    <span class="hljs-keyword">if</span> (limit &amp;&amp; limit &gt; <span class="hljs-number">0</span>) &#123;<br>      state.<span class="hljs-property">histories</span> = state.<span class="hljs-property">histories</span>.<span class="hljs-title function_">slice</span>(-limit)<br>    &#125;<br>    <span class="hljs-keyword">return</span> _.<span class="hljs-title function_">cloneDeep</span>(state)<br>  &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>使用方式：</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">import</span> undoReducerEnhancer <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./undoReducerEnhancer&#x27;</span><br><br><span class="hljs-comment">// 接受一个业务refucer,返回一个具有可撤退重做的新的reducer</span><br><span class="hljs-keyword">const</span> undoCustomComponent = <span class="hljs-title function_">undoReducerEnhancer</span>(customComponent, &#123;<br>  <span class="hljs-attr">limit</span>: <span class="hljs-number">10</span>, <span class="hljs-comment">// 限制记录长度</span><br>  <span class="hljs-attr">undoType</span>: <span class="hljs-title class_">Types</span>.<span class="hljs-property">UNDO_HISTORY</span>, <span class="hljs-comment">// 撤退操作别名</span><br>  <span class="hljs-attr">redoType</span>: <span class="hljs-title class_">Types</span>.<span class="hljs-property">REDO_HISTORY</span>, <span class="hljs-comment">// 重做操作别名</span><br>  <span class="hljs-attr">include</span>: [<br>    <span class="hljs-title class_">Types</span>.<span class="hljs-property">ADD_COMPONENT</span>,<br>    <span class="hljs-title class_">Types</span>.<span class="hljs-property">PASTE_COMPONENT</span>,<br>    <span class="hljs-title class_">Types</span>.<span class="hljs-property">UPDATE_COMPONENT_CONFIG</span>,<br>    <span class="hljs-title class_">Types</span>.<span class="hljs-property">UPDATE_FORM_CONFIG</span>,<br>    <span class="hljs-title class_">Types</span>.<span class="hljs-property">UPDATE_DATA_SORT</span>,<br>    <span class="hljs-title class_">Types</span>.<span class="hljs-property">DELETE_COMPONENT</span>,<br>    <span class="hljs-title class_">Types</span>.<span class="hljs-property">DELETE_ALL_COMPONENTS</span>,<br>  ],<br>  <span class="hljs-comment">// 加入需要记录流水的操作 action</span><br>&#125;)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> undoCustomComponent<br></code></pre></div></td></tr></table></figure>
+
+<h3 id="04-不足之处"><a href="#04-不足之处" class="headerlink" title="04 不足之处"></a>04 不足之处</h3><ul>
+<li>还未解决，封装一个方法，可以使得业务 action 无需按照高阶 reducer 的需要的数据格式进行数据包装，做到真正地可插拔式</li>
+<li>提供更多的参数，以便做到职责分明，减少耦合依赖</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Redux/">Redux</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Redux/">Redux</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AE%9E%E7%8E%B0%E6%97%A5%E5%BF%97%E6%B5%81%E6%B0%B4/">实现日志流水</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/07/Redux%20%E5%AE%98%E6%96%B9%E5%AE%9E%E7%8E%B0%E6%92%A4%E9%94%80%E9%87%8D%E5%81%9A%20--%20%E8%A7%A3%E6%9E%90/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Redux 官方实现撤销重做 -- 解析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/07/%E5%87%BD%E6%95%B0%E7%BB%84%E4%BB%B6%20useRef%20%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/">
+                        <span class="hidden-mobile">函数组件 useRef -组件设计</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
