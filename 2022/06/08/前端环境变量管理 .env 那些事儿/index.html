@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/favicon.png">
+  <link rel="icon" href="/img/favicon/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="DuoRouSai">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="🍬 前言：开发中，经常会碰到 .env 文件，常用保存一些敏感的配置信息，如数据库连接账号密码，第三方插件的 token 等，可能我们理所当然认为这是一个管理存储环境变量的地方，并没有深究它内部是如何工作的，通过深入浅出的方式重新了解环境变量以及常见几种开发环境">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端环境变量管理 .env 那些事儿">
+<meta property="og:url" content="http://example.com/2022/06/08/%E5%89%8D%E7%AB%AF%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%AE%A1%E7%90%86%20.env%20%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="🍬 前言：开发中，经常会碰到 .env 文件，常用保存一些敏感的配置信息，如数据库连接账号密码，第三方插件的 token 等，可能我们理所当然认为这是一个管理存储环境变量的地方，并没有深究它内部是如何工作的，通过深入浅出的方式重新了解环境变量以及常见几种开发环境">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/06/08/Oj87VcdNEJpCsoM.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/08/lx4TcrQjOBzWCqP.png">
+<meta property="og:image" content="http://example.com/2022/06/08/AppData/Roaming/Typora/typora-user-images/image-20220608174033367.png">
+<meta property="article:published_time" content="2022-06-08T14:59:49.530Z">
+<meta property="article:modified_time" content="2022-06-08T15:00:39.196Z">
+<meta property="article:author" content="DuoRouSai">
+<meta property="article:tag" content="前端工程化">
+<meta property="article:tag" content="环境变量">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2022/06/08/Oj87VcdNEJpCsoM.png">
+  
+  
+  <title>前端环境变量管理 .env 那些事儿 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DuoR</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="前端环境变量管理 .env 那些事儿">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-08 22:59" pubdate>
+        2022年6月8日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      28 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">前端环境变量管理 .env 那些事儿</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前端环境变量管理-env-那些事儿"><a href="#前端环境变量管理-env-那些事儿" class="headerlink" title="前端环境变量管理 .env 那些事儿"></a>前端环境变量管理 .env 那些事儿</h2><blockquote>
+<p>🍬 前言：开发中，经常会碰到 .env 文件，常用保存一些敏感的配置信息，如数据库连接账号密码，第三方插件的 token 等，可能我们理所当然认为这是一个管理存储环境变量的地方，并没有深究它内部是如何工作的，通过深入浅出的方式重新了解环境变量以及常见几种开发环境</p>
+</blockquote>
+<h3 id="01-process-env💻"><a href="#01-process-env💻" class="headerlink" title="01 process.env💻"></a>01 process.env💻</h3><p>认识.env 文件前，首先认识下 process 是 Node 的一个全局变量，process.env 保存是当前的运行的环境变量。</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">// index.js</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(process.<span class="hljs-property">env</span>)<br><br><span class="hljs-comment">// 通过终端我们打印出 process.env</span><br>node index.<span class="hljs-property">js</span><br><br><span class="hljs-comment">// 打印信息：（显而易见，打印出当前运行环境相关信息）</span><br>&#123;<br>  <span class="hljs-attr">ALLUSERSPROFILE</span>: <span class="hljs-string">&#x27;C:\\ProgramData&#x27;</span>,<br>  <span class="hljs-title class_">Android</span>: <span class="hljs-string">&#x27;D:\\CodeStudy\\AndroidProj\\Sdk\\platform-tools&#x27;</span>,<br>  <span class="hljs-attr">ANDROID_SDK_HOME</span>: <span class="hljs-string">&#x27;D:\\CodeStudy\\Android Studio\\avd&#x27;</span>,<br>  <span class="hljs-attr">APPDATA</span>: <span class="hljs-string">&#x27;C:\\Users\\DuoRouSai\\AppData\\Roaming&#x27;</span>,<br>  <span class="hljs-string">&#x27;asl.log&#x27;</span>: <span class="hljs-string">&#x27;Destination=file&#x27;</span>,<br>  <span class="hljs-title class_">CommonProgramFiles</span>: <span class="hljs-string">&#x27;C:\\Program Files\\Common Files&#x27;</span>,<br>  <span class="hljs-string">&#x27;CommonProgramFiles(x86)&#x27;</span>: <span class="hljs-string">&#x27;C:\\Program Files (x86)\\Common Files&#x27;</span>,<br>  <span class="hljs-title class_">CommonProgramW6432</span>: <span class="hljs-string">&#x27;C:\\Program Files\\Common Files&#x27;</span>,<br>  <span class="hljs-attr">COMPUTERNAME</span>: <span class="hljs-string">&#x27;DUOROUSAI&#x27;</span>,<br>  ...<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>该如何注入自定义变量？</strong></p>
+<p>单单只能查看 process.env 原有的配置信息，当然不能满足我们日常的开发，比如我们想注入一些自定义的变量，<code>AUTHOR=Duor</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># 采用键值对的形式加入</span><br>AUTHOR=Duor node index.js<br><span class="hljs-comment"># 多个变量</span><br>AUTHOR=Duor MESSAGE=Hello_KK! node index.js<br></code></pre></div></td></tr></table></figure>
+
+<p>打印结果：</p>
+<p><img src="https://s2.loli.net/2022/06/08/Oj87VcdNEJpCsoM.png" srcset="/img/loading.gif" lazyload alt="image-20220608150552762"></p>
+<p>这样做，带来一个后果：</p>
+<ul>
+<li>不便管理：当变量多时，每次启动都需要添加，变得非常的繁琐。</li>
+<li>可读性差：相信你不喜欢在长长的字符串寻找那个你想要的 KEY</li>
+</ul>
+<h3 id="02-env-文件-🗂️"><a href="#02-env-文件-🗂️" class="headerlink" title="02 .env 文件 🗂️"></a>02 .env 文件 🗂️</h3><p>接下来，就到了 <code>.env</code> 文件出场了，你可以写配置表一样，将一些重要的环境变量通过键值对形式保存在 <code>.env </code> 文件，例如像下面这样配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># .env</span><br><span class="hljs-comment"># APP 当前模式</span><br>APP_MODE: development<br><br><span class="hljs-comment"># 第三方插件密钥</span><br>OTHER_APP_TOKEN: 123456<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>那么问题来了</strong>，我们该如何读取 <code>.env</code> 文件里面的内容呢，紧接着 dotenv 出场了</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># 安装 dotenv 依赖</span><br>npm install -save dotenv<br></code></pre></div></td></tr></table></figure>
+
+<p>它相当于一个解析模块一样，可以将.env 文件里面的配置解析出来，并帮我们注入到 process.env 里面去</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">const</span> dotenv = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;dotenv&#x27;</span>)<br><br><span class="hljs-comment">// 1.不传 path 参数，会默认需要当前路径下的 .env 文件</span><br>dotenv.<span class="hljs-title function_">config</span>()<br><br><span class="hljs-comment">// 2.当.env 文件不在同级文件夹，可以通过 path 传入.env 文件的路径</span><br>dotenv.<span class="hljs-title function_">config</span>(&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;./.env&#x27;</span> &#125;)<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;APP_MODE:&#x27;</span>, process.<span class="hljs-property">env</span>.<span class="hljs-property">APP_MODE</span>)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;OTHER_APP_TOKEN:&#x27;</span>, process.<span class="hljs-property">env</span>.<span class="hljs-property">OTHER_APP_TOKEN</span>)<br></code></pre></div></td></tr></table></figure>
+
+<p>打印结果：</p>
+<p><img src="https://s2.loli.net/2022/06/08/lx4TcrQjOBzWCqP.png" srcset="/img/loading.gif" lazyload alt="image-20220608153428585"></p>
+<h3 id="03-聊聊开发中常见的几种环境-🌲"><a href="#03-聊聊开发中常见的几种环境-🌲" class="headerlink" title="03 聊聊开发中常见的几种环境 🌲"></a>03 聊聊开发中常见的几种环境 🌲</h3><p>一个项目的生命周期大概分为开发、测试、预发布和正式环境，由于它们之间环境变量也不同，这也导致我们一个项目开发之初需要配置不同环境下的 .env 文件</p>
+<blockquote>
+<p>🧑‍💻 开发环境：一般用于程序同学开发过程中自测使用，当代码本地测试无误后，就可以部署测试环境</p>
+<p>⚙️ 测试环境：当开发提测后，由测试同学进行一系列的功能，自动化，接口测试等</p>
+<p>⌨️ 预发布环境：它是一个独立的测试环境，是过渡到正式环境之前的最后一步验证，一般使用的是正式环境的环境变量</p>
+<p>✔️ 正式环境：也叫生产环境，是直接面向用户所使用的，使用的是正式环境的环境变量。</p>
+</blockquote>
+<p>话说到这，有些小伙伴可能疑问，那么多环境变量，难道我们一个个手动配置么？作为程序猿（懒 🦥），能自动化，就绝不手动。</p>
+<p>下面例子，通过运行不同的命令行，从而注入不同的环境变量</p>
+<p><strong>安装依赖：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># 安装 dotenv 依赖</span><br>npm install -save dotenv<br><br><span class="hljs-comment"># 安装 cross-env，用于解决windows用户设置环境变量痛点</span><br>npm install --save-dev cross-env<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>分别创建两个不同环境变量的文件，<code>.env.production</code> 和 <code>.env.development</code></strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># .env.development</span><br><span class="hljs-comment"># APP 当前模式:开发环境</span><br>APP_MODE: development<br><br><span class="hljs-comment"># 第三方插件密钥</span><br>OTHER_APP_TOKEN: 123456<br><br><span class="hljs-comment">#---------------------------------------------------</span><br><br><span class="hljs-comment"># .env.production</span><br><span class="hljs-comment"># APP 当前模式:生产环境</span><br>APP_MODE: production<br><br><span class="hljs-comment"># 第三方插件密钥</span><br>OTHER_APP_TOKEN: 789<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>配置 package.json 的 scripts</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs json"><span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;start:dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cross-env mode=development node index.js&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;start:prod&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cross-env mode=production node index.js&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br></code></pre></div></td></tr></table></figure>
+
+<p><strong>创建 config.js 文件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">// config.js</span><br><span class="hljs-comment">// 引入 dotenv 依赖</span><br><span class="hljs-keyword">const</span> dotenv = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;dotenv&#x27;</span>)<br><br><span class="hljs-comment">// 判断当前环境： 生成环境 / 开发环境</span><br><span class="hljs-keyword">let</span> envFile =<br>  process.<span class="hljs-property">env</span>.<span class="hljs-property">mode</span> === <span class="hljs-string">&#x27;development&#x27;</span> ? <span class="hljs-string">&#x27;.env.development&#x27;</span> : <span class="hljs-string">&#x27;.env.production&#x27;</span><br><br><span class="hljs-comment">// 注入环境变量</span><br>dotenv.<span class="hljs-title function_">config</span>(&#123; <span class="hljs-attr">path</span>: envFile &#125;)<br><br><span class="hljs-comment">// 导出环境变量</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">APP_MODE</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">APP_MODE</span>,<br>  <span class="hljs-attr">OTHER_APP_TOKEN</span>: process.<span class="hljs-property">env</span>.<span class="hljs-property">OTHER_APP_TOKEN</span>,<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>index.js</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">// 导入 config.js 模块</span><br><span class="hljs-keyword">const</span> &#123; <span class="hljs-variable constant_">APP_MODE</span>, <span class="hljs-variable constant_">OTHER_APP_TOKEN</span> &#125; = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./config&#x27;</span>)<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;APP_MODE:&#x27;</span>, <span class="hljs-variable constant_">APP_MODE</span>)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;OTHER_APP_TOKEN:&#x27;</span>, <span class="hljs-variable constant_">OTHER_APP_TOKEN</span>)<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>分别运行<code>npm run start:dev</code> 和 <code>npm run start:prod</code></strong></p>
+<p><img src="../AppData/Roaming/Typora/typora-user-images/image-20220608174033367.png" srcset="/img/loading.gif" lazyload alt="image-20220608174033367"></p>
+<p>通过终端打印的信息可以看到，我们已经实现了，通过 npm 命令，轻松实现自动注入不同的环境变量</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/">前端工程化</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/">前端工程化</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">环境变量</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/07/React%20%E2%80%98s%20Context%20%E7%94%A8%E6%B3%95/">
+                        <span class="hidden-mobile">React ‘s Context 用法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
