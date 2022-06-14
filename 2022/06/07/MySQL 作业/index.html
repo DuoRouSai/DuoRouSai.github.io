@@ -1,0 +1,653 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/favicon.png">
+  <link rel="icon" href="/img/favicon/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="DuoRouSai">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="MySQL 基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 作业">
+<meta property="og:url" content="http://example.com/2022/06/07/MySQL%20%E4%BD%9C%E4%B8%9A/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="MySQL 基础">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/05/23/uT1DlApUJKHtiM4.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/23/s3qBE6jLJxN4tCA.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/23/D3Q7b8wMShfFONc.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/23/vN6UyMfnCoV8wud.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/23/TUODY6zXhwqP3uG.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/24/eKfER8n5ztNPGJv.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/24/BG8MgEi5xcIjVT6.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/25/jKaRmZnMIbF48Hf.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/25/W7UiTMCPGusLjb6.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/25/SPpNxA25i6Lab7O.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/25/R38ISgNVYEbBxzr.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/25/BkEzZHVY14ySUwA.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/25/PUh9QfydI5rsTGB.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/25/7DNFmMjHJTLCycz.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/25/7N91neHYTVC3Bq5.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/24/9QTehy8jWmzxIZw.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/24/Xfk3cy6ZvxQ2ENF.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/24/osYugqISCLZFGed.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/24/9AENMnSgUTRY6BQ.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/25/uD3lmx8IkP6YdCH.png">
+<meta property="og:image" content="https://s2.loli.net/2022/05/24/v9LW7eSrfQFdUu3.png">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5229824-491ffbb8cbe104d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/658/format/webp">
+<meta property="article:published_time" content="2022-06-07T15:03:56.331Z">
+<meta property="article:modified_time" content="2022-06-14T10:29:16.929Z">
+<meta property="article:author" content="DuoRouSai">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2022/05/23/uT1DlApUJKHtiM4.png">
+  
+  
+  <title>MySQL 作业 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DuoR</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="MySQL 作业">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-07 23:03" pubdate>
+        2022年6月7日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      36 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MySQL 作业</h1>
+            
+            <div class="markdown-body">
+              <h2 id="MySQL-作业"><a href="#MySQL-作业" class="headerlink" title="MySQL 作业"></a>MySQL 作业</h2><h3 id="题目-1"><a href="#题目-1" class="headerlink" title="题目 1"></a>题目 1</h3><p>1.满足 WHERE 条件的数据有 10W 行，请问这个时候使用 LIMIT 1 来进行查询时，需要扫描多少行数据？为什么？</p>
+<blockquote>
+<p>通过打印执行计划发现，使用 LIMIT 1 进行扫描行数是 100207</p>
+</blockquote>
+<p><strong>SQL 语句执行顺序:</strong></p>
+<blockquote>
+<p>FROM =&gt; ON =&gt; JOIN =&gt; WHERE =&gt; … =&gt; LIMIT</p>
+</blockquote>
+<p><strong>原理：</strong>在实际 SQL 语句执行过程中，是由 <code>FROM</code> 开始， 每个步骤都会为下一步骤生成一个虚拟表，再执行 <code>LIMIT</code> 之前先执行 <code>WHERE</code>，通过执行计划 <code>using where</code>发现， limit 1 查询时并没有找到可用的索引，从而只能通过 WHERE 条件过滤获取结果。</p>
+<p><img src="https://s2.loli.net/2022/05/23/uT1DlApUJKHtiM4.png" srcset="/img/loading.gif" lazyload alt="image-20220523150148384"></p>
+<h3 id="题目-2"><a href="#题目-2" class="headerlink" title="题目 2"></a>题目 2</h3><p>2.判断在不同的 SQL 语句中使用 AS 别名是否正确？为什么？</p>
+<figure class="highlight sql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> order_number <span class="hljs-keyword">AS</span> order_no,<br>       <span class="hljs-built_in">SUM</span>(price <span class="hljs-operator">*</span> quantity) <span class="hljs-keyword">AS</span> amount<br><span class="hljs-keyword">FROM</span> orderdetails<br><span class="hljs-keyword">WHERE</span> order_no <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;001&#x27;</span>(错误❌)<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> order_no（正确✔）<br><span class="hljs-keyword">HAVING</span> total <span class="hljs-operator">&gt;</span> <span class="hljs-number">60000</span>;<br></code></pre></div></td></tr></table></figure>
+
+<blockquote>
+<p>在 MySQL 中，<code>WHERE</code> 错误 ；<code>GROUP BY</code> 正确</p>
+</blockquote>
+<p><strong>原理：</strong></p>
+<p>在标准 SQL 语句执行顺序下， <code>WHERE</code> 和 <code>GROUP BY</code> 都是不可以使用别名的</p>
+<blockquote>
+<p>FROM =&gt; ON =&gt; JOIN =&gt; WHERE =&gt; GROUP BY =&gt; … =&gt; SELECT =&gt; …</p>
+</blockquote>
+<p>但是，<a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/5.7/en/problems-with-alias.html">MySQL 下 <code>GROUP BY</code> 是可以的</a>， 原因是 MySQL 对查询进行加强</p>
+<p><img src="https://s2.loli.net/2022/05/23/s3qBE6jLJxN4tCA.png" srcset="/img/loading.gif" lazyload alt="image-20220523171715797"></p>
+<h3 id="题目-3"><a href="#题目-3" class="headerlink" title="题目 3"></a>题目 3</h3><p>3.如果表 T 中没有字段 k，而你执行了这个语句 <code>select * from T where k=1</code>，那肯定是会报“不存在这个列”的错误：“<code>Unknown column &#39;a&#39; in &#39;where clause&#39;</code>”。那么这个错误是在我们上面提到的哪个阶段报出来的呢？</p>
+<blockquote>
+<p><code>分析器阶段</code>报错</p>
+</blockquote>
+<p><img src="https://s2.loli.net/2022/05/23/D3Q7b8wMShfFONc.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>原理：</strong>在 MySQL 的 server 层中， 分析器会对 SQL 语句进行<strong>词法分析，语法分析，语义分析</strong>，其中：</p>
+<blockquote>
+<p>词法分析：分析 SQL 语句中的字符串代表什么，生成解析树。如将字符串转换为表、列等…</p>
+<p>语法分析：根据词法分析的结果，语法分析器会根据语法规则，判断你输入的这个 SQL 语句是否满足 MySQL 语法。 如通过关键字 select 得知是一条查询语句</p>
+<p>预处理器：对 SQL 中的表，字段等内容检查是否存在，如 xx 表是否存在，xx 表 xx 列是否存在</p>
+</blockquote>
+<p>由此可见，当表 T 中没有字段 k 不存在时，在分析器阶段的预处理器阶段就会报错</p>
+<h3 id="题目-4"><a href="#题目-4" class="headerlink" title="题目 4"></a>题目 4</h3><p>4.以下 SQL 是否会异常？如果异常，那么正确的应该怎么写？</p>
+<figure class="highlight sql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> order_number <span class="hljs-keyword">AS</span> order_no,<br>       <span class="hljs-built_in">SUM</span>(price <span class="hljs-operator">*</span> quantity) <span class="hljs-keyword">AS</span> amount<br><span class="hljs-keyword">FROM</span> orderdetails<br><span class="hljs-keyword">WHERE</span> <span class="hljs-built_in">SUM</span>(price <span class="hljs-operator">*</span> quantity) <span class="hljs-operator">&gt;</span> <span class="hljs-number">100</span><br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> order_no;<br></code></pre></div></td></tr></table></figure>
+
+<blockquote>
+<p>上述 SQL 是<strong>错误</strong>的</p>
+</blockquote>
+<p><strong>建表语句：</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sql"><span class="hljs-comment">-- 创建表orderdetails</span><br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `orderdetails` (<br>  `order_number` <span class="hljs-type">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> AUTO_INCREMENT,<br>  `price` <span class="hljs-type">float</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  `quantity` <span class="hljs-type">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br>  <span class="hljs-keyword">PRIMARY</span> KEY (`order_number`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB AUTO_INCREMENT<span class="hljs-operator">=</span><span class="hljs-number">3</span> <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4 <span class="hljs-keyword">COLLATE</span><span class="hljs-operator">=</span>utf8mb4_bin;<br><br><span class="hljs-comment">-- 插入两条数据</span><br><span class="hljs-comment">-- 1。</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> testsql.orderdetails<br>(price, quantity)<br><span class="hljs-keyword">VALUES</span>(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>);<br><span class="hljs-comment">-- 2.</span><br><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> testsql.orderdetails<br>(price, quantity)<br><span class="hljs-keyword">VALUES</span>(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>);<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>验证过程：</strong></p>
+<p>不难发现，因为在 <code>WHERE</code> 子句中使用了 group function 导致报错，因为在 SQL 语句执行过程中，<code>WHERE</code> 执行是要比 <code>AGG_FUNC</code> 要早，导致在执行 <code>WHERE</code> 无法识别聚合函数导致报错。</p>
+<p><img src="https://s2.loli.net/2022/05/23/vN6UyMfnCoV8wud.png" srcset="/img/loading.gif" lazyload alt="image-20220523181020640"></p>
+<p><strong>正确写法：</strong></p>
+<p><code>HAVING</code> 子句是在 <code>AGG_FUNC</code> 步骤之后， 所以使用其代替 <code>WHERE</code> 进行判断</p>
+<figure class="highlight sql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> order_number <span class="hljs-keyword">AS</span> order_no,<br>       <span class="hljs-built_in">SUM</span>(price <span class="hljs-operator">*</span> quantity) <span class="hljs-keyword">AS</span> amount<br><span class="hljs-keyword">FROM</span> orderdetails<br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> order_no;<br><span class="hljs-keyword">HAVING</span> amount <span class="hljs-operator">&gt;</span><span class="hljs-number">100</span><br></code></pre></div></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/05/23/TUODY6zXhwqP3uG.png" srcset="/img/loading.gif" lazyload alt="image-20220523181700483"></p>
+<h3 id="题目-5"><a href="#题目-5" class="headerlink" title="题目 5"></a>题目 5</h3><p>5.为什么要使用数据库连接池？连接池如何保活？</p>
+<blockquote>
+<p>数据连接池主要作用让数据库连接得到复用，避免了频繁建立，释放连接而产生大量性能和时间消耗，提升数据库性能和缩短响应时间。另一方面还可以统一管理连接，防止数据库连接泄漏导致的安全的隐患。</p>
+<p>连接池保活机制，业务代码在低峰时会降低 get()动作，所以连接池中的连接在长时间不用时会导致失效，此时保活线程在监测到 get()的使用频率较低时，会模拟业务程序调用 get()获取连接后发送心跳包，然后再通过 free()将被保活的连接放回队列中，达到连接池中所有连接保活的目的。</p>
+</blockquote>
+<h3 id="题目-6"><a href="#题目-6" class="headerlink" title="题目 6"></a>题目 6</h3><p>6.以下两条 SQL，假设字段都不存在索引的前提下：</p>
+<ol>
+<li>哪个性能更好？为什么？</li>
+<li>这两条语句的执行过程。</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> a <span class="hljs-keyword">from</span> t <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> a <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">null</span>;<br><span class="hljs-keyword">select</span> <span class="hljs-keyword">distinct</span> a <span class="hljs-keyword">from</span> t;<br></code></pre></div></td></tr></table></figure>
+
+<ul>
+<li><strong>打印执行计划发现：</strong></li>
+</ul>
+<p>第一条 SQL 语句</p>
+<p><img src="https://s2.loli.net/2022/05/24/eKfER8n5ztNPGJv.png" srcset="/img/loading.gif" lazyload alt="image-20220524142321457"></p>
+<p>第二条 SQL 语句</p>
+<p><img src="https://s2.loli.net/2022/05/24/BG8MgEi5xcIjVT6.png" srcset="/img/loading.gif" lazyload alt="image-20220524142655749"></p>
+<blockquote>
+<p>第二条 SQL 性能会更好，前者总共执行 4 个步骤，而后者总共执行 3 个步骤</p>
+</blockquote>
+<ul>
+<li><p>两条语句的执行过程</p>
+<ul>
+<li><p>第一条 SQL 语句</p>
+<blockquote>
+<p>a.执行 FROM 获取数据表，生成虚拟表 vt1</p>
+<p>b.执行 GROUP BY 操作，按照列名 a 进行分组 =&gt; vt2</p>
+<p>c.执行 SLELECT 操作，按照列名 a 进行选取操作 =&gt; vt3</p>
+<p>d.执行 ORDER BY 操作，生成游标 vc4</p>
+</blockquote>
+</li>
+<li><p>第二条 SQL 语句</p>
+<blockquote>
+<p>a.执行 FROM 获取数据表，生成虚拟表 vt1</p>
+<p>b.执行 SLELECT 操作，按照列名 a 进行选取操作 =&gt; vt2</p>
+<p>c.执行 DISTINCT 操作，根据列名 a，去重 =&gt; vt3</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="题目-7"><a href="#题目-7" class="headerlink" title="题目 7"></a>题目 7</h3><p>7.什么样的表，适合使用查询缓存？为什么？</p>
+<blockquote>
+<p>一般来说，数据相对稳定、不常更新的表适合使用查询缓存。 因为这类数据表不需要常常的更新，更多起到一个查询的作用。若遇到频繁的请求时，通过查询缓存，命中则直接返回结果集，从而减少 SQL 执行次数，优化 SQL 的性能。</p>
+<p>具体举例，比如地理区域数据表，区域代号这类数据表等等</p>
+<p>比如在某电商平台，有个地址管理，用户可以通过选择省市区存储自己的地址，而 省市区这些地址，往往是不需要频繁更新的，起到往往是标识和选择的作用，所以用户在选择省市区联动时，会频繁查询省市区数据表，经过查询缓存步骤时，到查询引用表，通过一个哈希值（查询的数据库，客户端协议，查询本身等），判断是否命中（对比原始 SQL 语句，所以任何字符上的不同，例如空格，注释等都会导致缓存不会命中），假若命中，则直接返回缓存中的结果，否则正常走执行 SQL 语句。</p>
+</blockquote>
+<h3 id="题目-8"><a href="#题目-8" class="headerlink" title="题目 8"></a>题目 8</h3><p>8.以下 SQL 会报什么错？是在分析器哪个步骤抛出的错误？</p>
+<figure class="highlight sql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sql">elect id, name <span class="hljs-keyword">from</span> `<span class="hljs-keyword">user</span>` <span class="hljs-keyword">where</span> `id` <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br></code></pre></div></td></tr></table></figure>
+
+<blockquote>
+<p>词法分析阶段报错</p>
+</blockquote>
+<p><strong>分析器执行过程：</strong></p>
+<blockquote>
+<p>词法分析：分析 SQL 语句中的字符串代表什么，生成解析树。如将字符串转换为表、列等…</p>
+<p>语法分析：根据词法分析的结果，语法分析器会根据语法规则，判断你输入的这个 SQL 语句是否满足 MySQL 语法。 如通过关键字 select 得知是一条查询语句</p>
+<p>预处理器：对 SQL 中的表，字段等内容检查是否存在，如 xx 表是否存在，xx 表 xx 列是否存在</p>
+</blockquote>
+<p>由此可见，当 SQL 语句，执行到<code>词法分析</code>时，发现无法解析 <code>elect</code> 这个字符串，而从无法生成解析树</p>
+<h3 id="题目-9"><a href="#题目-9" class="headerlink" title="题目 9"></a>题目 9</h3><p>9.对以下 SQL 进行优化器分析，会出现哪些情况？</p>
+<figure class="highlight sql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> t1 <span class="hljs-keyword">join</span> t2 <span class="hljs-keyword">on</span> t1.c <span class="hljs-operator">=</span> <span class="hljs-number">10</span> <span class="hljs-keyword">and</span> t2.d <span class="hljs-operator">=</span> <span class="hljs-number">20</span>;<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>a.t1 和 t2 都无索引时，各 100 条数据</strong></p>
+<p><img src="https://s2.loli.net/2022/05/25/jKaRmZnMIbF48Hf.png" srcset="/img/loading.gif" lazyload alt="image-20220524220236404"></p>
+<p><strong>b.t1 和 t2 都无索引时，各 10w 条数据</strong></p>
+<p><img src="https://s2.loli.net/2022/05/25/W7UiTMCPGusLjb6.png" srcset="/img/loading.gif" lazyload alt="image-20220524221455728"></p>
+<p><strong>c.t1（添加），t2 其中一个有索引，各 100 条数据</strong></p>
+<p><img src="https://s2.loli.net/2022/05/25/SPpNxA25i6Lab7O.png" srcset="/img/loading.gif" lazyload alt="image-20220524223037569"></p>
+<p><strong>d.t1（添加），t2 其中一个有索引，各 10w 数据</strong></p>
+<p><img src="https://s2.loli.net/2022/05/25/R38ISgNVYEbBxzr.png" srcset="/img/loading.gif" lazyload alt="image-20220524222136239"></p>
+<p><strong>e.t1，t2 都有索引，各 100 条数据</strong></p>
+<p><img src="https://s2.loli.net/2022/05/25/BkEzZHVY14ySUwA.png" srcset="/img/loading.gif" lazyload alt="image-20220524223128738"></p>
+<p><strong>f.t1，t2 都有索引，各 10w 条数据</strong></p>
+<p><img src="https://s2.loli.net/2022/05/25/PUh9QfydI5rsTGB.png" srcset="/img/loading.gif" lazyload alt="image-20220524222256582"></p>
+<p><strong>g.当 t1 数据量大于 t2 数据量</strong></p>
+<p><img src="https://s2.loli.net/2022/05/25/7DNFmMjHJTLCycz.png" srcset="/img/loading.gif" lazyload alt="image-20220524223816271"></p>
+<p><strong>h.当 t2 数据量大于 t1 数据量</strong></p>
+<p><img src="https://s2.loli.net/2022/05/25/7N91neHYTVC3Bq5.png" srcset="/img/loading.gif" lazyload alt="image-20220524223956446"></p>
+<p><strong>分析可得：</strong></p>
+<blockquote>
+<p>默认情况：（数据量一致，无索引）</p>
+<p>1.选择 join 关键字前面的表作为驱动表</p>
+<p>当 t1, t2 其中一个拥有索引</p>
+<p>1.数据量少，优化器选择其中有索引一方（数据表），作为驱动表</p>
+<p>2.数据量大，优化器选择其中有索引一方（数据表），作为驱动表，随着数据量增大，扫描 rows 越少</p>
+<p>当 t1, t2 都拥有索引</p>
+<p>1.选中数据量少的一方（数据表），作为驱动表</p>
+<p>2.数据量一致，选择默认 join 关键字前面的表作为驱动表</p>
+</blockquote>
+<p><strong>总结：</strong></p>
+<ul>
+<li><p>MySQL 优化器是基于成本来选择最优执行方案的，哪个成本(rows)最少选哪个</p>
+</li>
+<li><p>数据量大的时候，适当使用索引可以，减少扫描成本</p>
+</li>
+</ul>
+<h3 id="题目-10"><a href="#题目-10" class="headerlink" title="题目 10"></a>题目 10</h3><p>10.如下表，请编写 SQL，完成以下题目：</p>
+<p><strong>score 表数据如下：</strong></p>
+<p><img src="https://s2.loli.net/2022/05/24/9QTehy8jWmzxIZw.png" srcset="/img/loading.gif" lazyload alt="image-20220524182200241"></p>
+<p>1.从每个分组中找到分数排名第一的用户；</p>
+<p><img src="https://s2.loli.net/2022/05/24/Xfk3cy6ZvxQ2ENF.png" srcset="/img/loading.gif" lazyload alt="image-20220524181758561"></p>
+<p>​ 2.从每个分组中找到分数排名前二的用户；</p>
+<p><img src="https://s2.loli.net/2022/05/24/osYugqISCLZFGed.png" srcset="/img/loading.gif" lazyload alt="image-20220524181813817"></p>
+<p>​ 3.获取每个每组下最后两名分数的平均值；</p>
+<p><img src="https://s2.loli.net/2022/05/24/9AENMnSgUTRY6BQ.png" srcset="/img/loading.gif" lazyload alt="image-20220524182118477"></p>
+<h3 id="题目-11"><a href="#题目-11" class="headerlink" title="题目 11"></a>题目 11</h3><p>11.如果用 left join 的话，左边的表一定是驱动表吗？请举例说明。</p>
+<blockquote>
+<p>不一定，下方举个栗子</p>
+</blockquote>
+<p>创建两个结构相同的表 t1 和 t2 ，其中表 t1 的 c 字段有索引，而表 t2 没有</p>
+<p><strong>分别执行两个不同 SQL 语句</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sql"><span class="hljs-comment">-- 第一条SQL</span><br>explain <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> t1 <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> t2 <span class="hljs-keyword">on</span> t1.c <span class="hljs-operator">=</span> t2.c <span class="hljs-keyword">and</span>  t2.d <span class="hljs-operator">=</span> t1.d ;<br><span class="hljs-comment">-- 第二条 SQL</span><br>explain <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> t1 <span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> t2 <span class="hljs-keyword">on</span> t1.c <span class="hljs-operator">=</span> t2.c <span class="hljs-keyword">where</span>  t2.d <span class="hljs-operator">=</span> t1.d ;<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>打印 explain：</strong></p>
+<p><img src="https://s2.loli.net/2022/05/25/uD3lmx8IkP6YdCH.png" srcset="/img/loading.gif" lazyload alt="image-20220524233059949"></p>
+<p><img src="https://s2.loli.net/2022/05/24/v9LW7eSrfQFdUu3.png" srcset="/img/loading.gif" lazyload alt="image-20220524234121992"></p>
+<blockquote>
+<p>可以发现，当把被驱动表的字段放在 where 条件里面做等值判断或不等值判断，会使得 left join 关键字右边 t2 作为驱动表。</p>
+<p>通过 show warnings, 可以看到，MySQL 优化器把这条语句的 left join 改写成了 join，然后因为表 t1 的 c 上有索引，就把表 t2 作为驱动表，这样就可以用上表 t1 的 c 索引。</p>
+</blockquote>
+<h1 id="课外题"><a href="#课外题" class="headerlink" title="课外题"></a>课外题</h1><ol>
+<li><p>课程中，详细讲述了一条查询 SQL 是如何执行的，那么，一条更新 SQL 又是如何执行呢？</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5229824-491ffbb8cbe104d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/658/format/webp" srcset="/img/loading.gif" lazyload alt="img"></p>
+</li>
+<li><p>MySQL 通过哪个参数可以设置不使用查询缓存？</p>
+<p>查询时增加一个 SQL_NO_CACHE 指令</p>
+<figure class="highlight sql"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> SQL_NO_CACHE field_1, field_2, ... <span class="hljs-keyword">from</span> table_1;<br></code></pre></div></td></tr></table></figure></li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/MySQL/">MySQL</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/MySQL/">MySQL</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/06/07/React%20%E2%80%98s%20Context%20%E7%94%A8%E6%B3%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">React ‘s Context 用法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%20%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%20redux%20%E5%92%8C%20react-redux/">
+                        <span class="hidden-mobile">深入理解:简单实现 redux 和 react-redux</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
