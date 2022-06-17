@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/favicon.png">
+  <link rel="icon" href="/img/favicon/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="DuoRouSai">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="不知道有没有人试过，不小心用 Github 的账号，提交 commit 到公司代码仓库中去，那一天突然兴致跑去看提交历史，会有个莫名其妙的东西混进来。这谁谁谁的代码吖，定睛一看，好像是我自己的 🫣，但又双为时已晚了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何利用 Git Hooks 来解决 “不会还有用 qq 邮箱来提交公司代码吧” 痛点">
+<meta property="og:url" content="http://example.com/2022/06/17/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8%20Git%20Hooks%20%E6%9D%A5%E8%A7%A3%E5%86%B3%20%E2%80%9C%E4%B8%8D%E4%BC%9A%E8%BF%98%E6%9C%89%E7%94%A8%20qq%20%E9%82%AE%E7%AE%B1%E6%9D%A5%E6%8F%90%E4%BA%A4%E5%85%AC%E5%8F%B8%E4%BB%A3%E7%A0%81%E5%90%A7%E2%80%9D%20%E7%97%9B%E7%82%B9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="不知道有没有人试过，不小心用 Github 的账号，提交 commit 到公司代码仓库中去，那一天突然兴致跑去看提交历史，会有个莫名其妙的东西混进来。这谁谁谁的代码吖，定睛一看，好像是我自己的 🫣，但又双为时已晚了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/06/17/RtzCV78HaehSUgK.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/17/qGDg3z4mWLKp5Tr.png">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-161c0a131454d4b24f16a9a3125d947f_r.jpg">
+<meta property="og:image" content="https://s2.loli.net/2022/06/17/sQobmyhitSDEFnK.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/17/aABc7DM2yjGVvHd.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/17/dfIViKGRSpZz2Bg.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/17/dx5uQrUBczeVGla.png">
+<meta property="article:published_time" content="2022-06-17T10:35:55.288Z">
+<meta property="article:modified_time" content="2022-06-17T10:36:37.056Z">
+<meta property="article:author" content="DuoRouSai">
+<meta property="article:tag" content="Git Hooks">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2022/06/17/RtzCV78HaehSUgK.png">
+  
+  
+  <title>如何利用 Git Hooks 来解决 “不会还有用 qq 邮箱来提交公司代码吧” 痛点 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DuoR</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="如何利用 Git Hooks 来解决 “不会还有用 qq 邮箱来提交公司代码吧” 痛点">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-17 18:35" pubdate>
+        2022年6月17日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      23 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">如何利用 Git Hooks 来解决 “不会还有用 qq 邮箱来提交公司代码吧” 痛点</h1>
+            
+            <div class="markdown-body">
+              <h2 id="如何利用-Git-Hooks-来解决-“不会还有用-qq-邮箱来提交公司代码吧”-痛点"><a href="#如何利用-Git-Hooks-来解决-“不会还有用-qq-邮箱来提交公司代码吧”-痛点" class="headerlink" title="如何利用 Git Hooks 来解决 “不会还有用 qq 邮箱来提交公司代码吧” 痛点"></a>如何利用 Git Hooks 来解决 “不会还有用 qq 邮箱来提交公司代码吧” 痛点</h2><blockquote>
+<p>没错！那个人就是我(●’◡’●)</p>
+<p>不知道有没有人试过，不小心用 Github 的账号，提交 commit 到公司代码仓库中去，那一天突然兴致跑去看提交历史，会有个莫名其妙的东西混进来。这谁谁谁的代码吖，定睛一看，好像是我自己的 🫣，但又双为时已晚了。</p>
+</blockquote>
+<h3 id="01-Git-Hooks"><a href="#01-Git-Hooks" class="headerlink" title="01 Git Hooks"></a>01 Git Hooks</h3><p>​ 从字面意思，大家应该都能像到是用来做什么的了。对对对，就是脑海中想像那个字眼，git 钩子。它的实现非常简单，Git 能在特定的重要动作发生时触发自定义脚本，其中比较常用的有：<code>pre-commit</code>、<code>commit-msg</code>、<code>pre-push</code> 等钩子（hooks）。用于编写 git hooks 的脚本语言是没有限制的，你可以用 <code>nodejs</code>、<code>shell</code>、<code>python</code>、<code>ruby</code>等脚本语言，非常的灵活方便。</p>
+<p>我们新建一个文件夹，<code>git init</code> 初始化仓库，进入 .git/hooks 文件夹，可以看到各种各样 sample 结尾的文件。</p>
+<p><img src="https://s2.loli.net/2022/06/17/RtzCV78HaehSUgK.png" srcset="/img/loading.gif" lazyload alt="image-20220617163432439"></p>
+<p>打开其中一个看看，这些 sample 文件只是样板文件，简单来说，就是打个样。类似这个 pre-commit.sample 文件，从它注释来看，意思说给你打个样看好了，就是说，当提交 git commit 不带参数，可以通过 exit 非零来停止 commit 。说明你可以在这里编写一些校验判断在 commit 之前，类似邮箱校验，代码样式校验都可以在这里实现。通过重命名 pre-commit.sample ====&gt; pre-commit 投入使用。</p>
+<img src="https://s2.loli.net/2022/06/17/qGDg3z4mWLKp5Tr.png" srcset="/img/loading.gif" lazyload alt="image-20220617163525655" style="zoom: 67%;" />
+
+<p>至于每个钩子的作用，可以参照下面搬运过来的表</p>
+<p><strong>PS：完整钩子说明，请参考</strong><a href="https://link.zhihu.com/?target=https://git-scm.com/docs/githooks">官网链接</a></p>
+<p><img src="https://pic4.zhimg.com/v2-161c0a131454d4b24f16a9a3125d947f_r.jpg" srcset="/img/loading.gif" lazyload alt="preview"></p>
+<h3 id="02-解决痛点"><a href="#02-解决痛点" class="headerlink" title="02 解决痛点"></a>02 解决痛点</h3><p>为了解决上述痛点，我们分析可得，在 pre-commit 或 common-msg 来进行校验邮箱号，这边以 pre-commit 为例，编写下面的代码，删除最后 sample 结尾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># pre-commit</span><br><span class="hljs-comment">#!/usr/bin/sh</span><br><span class="hljs-comment"># 用 `` 可以将命令的输出结果赋值给变</span><br><span class="hljs-comment"># 获取用户 email</span><br>email=`git config user.email`<br>email_re=<span class="hljs-string">&quot;@kkguan\.com&quot;</span><br><span class="hljs-keyword">if</span> [[ ! <span class="hljs-variable">$email</span> =~ <span class="hljs-variable">$email_re</span> ]]<br><span class="hljs-keyword">then</span><br>	<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;此用户 <span class="hljs-variable">$email</span> 没有权限，具有权限的用户为： xxx@kkguan.com&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;git config --local user.name \&quot;xxx\&quot;&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;git config --local user.email \&quot;xxx@kkguan.com\&quot;&quot;</span><br><br>	<span class="hljs-comment"># 异常退出</span><br>	<span class="hljs-built_in">exit</span> 1<br><span class="hljs-keyword">fi</span><br></code></pre></div></td></tr></table></figure>
+
+<p>检验成果的时候到了！我们新建一个 a.js 文件并提交到暂存区，当输入 <code>git commit -m &quot;add a.js&quot;</code> 命令，哇哦，我们成功了！！！🤪</p>
+<p>同时还善意提醒我们可以通过下面两条命令修改项目仓库中的用户名和邮箱号。</p>
+<p><img src="https://s2.loli.net/2022/06/17/sQobmyhitSDEFnK.png" srcset="/img/loading.gif" lazyload alt="image-20220617170213077"></p>
+<h3 id="03-Husky"><a href="#03-Husky" class="headerlink" title="03 Husky"></a>03 Husky</h3><p>上面介绍了如何使用 Git hooks 钩子，但是这个钩子只能我们本地使用，如何礼貌让一起开发的同学一起规范起来呢，难不成，诶诶那个谁，你那个钩子 copy 我一份嘞，都是用 git 的人了，应该优雅点。下面我们介绍 [Husky](<a target="_blank" rel="noopener" href="https://typicode.github.io/husky/#/">Husky - Git hooks (typicode.github.io)</a>) 这个库。帮助我们管理 Git Hooks</p>
+<p><strong>官方提供两种方式安装</strong></p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://typicode.github.io/husky/#/?id=automatic-recommended">Automatic (recommended)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://typicode.github.io/husky/#/?id=manual">Manual</a></p>
+</li>
+</ul>
+<p>那我我们就按照，官方推荐自动的方式</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta"># </span><span class="language-bash">`husky-init` is a one-time <span class="hljs-built_in">command</span> to quickly initialize a project with husky.</span><br>npx husky-init &amp;&amp; npm install       # npm<br>npx husky-init &amp;&amp; yarn              # Yarn 1<br>yarn dlx husky-init --yarn2 &amp;&amp; yarn # Yarn 2+<br>pnpm dlx husky-init &amp;&amp; pnpm install # pnpm<br></code></pre></div></td></tr></table></figure>
+
+<p>运行完命令后，会同时修改 package.json 和 生成一个简单的例子 <code>pre-commit</code> hook</p>
+<p>也可以，通过生成 commit-msg 和其他的钩子</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">npx husky add .husky/commit-msg &#x27;npx --no commitlint --edit &quot;$1&quot;&#x27;<br></code></pre></div></td></tr></table></figure>
+
+<p><strong>见证奇迹</strong></p>
+<p>接下来，我们将我们上面写好的邮箱校验放入生成好的 pre-commit 文件中</p>
+<p><img src="https://s2.loli.net/2022/06/17/aABc7DM2yjGVvHd.png" srcset="/img/loading.gif" lazyload alt="image-20220617175843860"></p>
+<p>可以看到，校验成功了。我们再试试 commit-msg</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell">npx husky add .husky/commit-msg &#x27;&#x27;<br></code></pre></div></td></tr></table></figure>
+
+<p>输入完命令后，生成 .husky/commit-msg 文件，我们可以利用这个文件校验 commit 提交的备注</p>
+<figure class="highlight shell"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="language-bash">.husky/commit-msg</span><br><span class="hljs-meta">#</span><span class="language-bash">!/usr/bin/env sh</span><br>. &quot;$(dirname -- &quot;$0&quot;)/_/husky.sh&quot;<br><br>msg_re=&quot;^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|release|revert):&quot;<br><br>if [[ ! $commit_msg =~ $msg_re ]]<br>then<br>	echo -e &quot;\n不合法的 commit 消息提交格式，请使用正确的格式：\<br>    \nfeat: 新功能、新特性\<br>    \nfix: 修改 bug\<br>    \nperf: 更改代码，以提高性能（在不影响代码内部行为的前提下，对程序性能进行优化）\<br>    \nrefactor: 代码重构（重构，在不影响代码内部行为、功能下的代码修改）\<br>    \ndocs: 文档修改\<br>    \nstyle: 代码格式修改, 注意不是 css 修改（例如分号修改）\<br>    \ntest: 测试用例新增、修改\<br>    \nbuild: 影响项目构建或依赖项修改\<br>    \nrevert: 恢复上一次提交\<br>    \nci: 持续集成相关文件修改\<br>    \nchore: 其他修改（不在上述类型中的修改）\<br>    \nrelease: 发布新版本 &quot;<br><span class="hljs-meta"></span><br><span class="hljs-meta">	# </span><span class="language-bash">异常退出</span><br>	exit 1<br>fi<br></code></pre></div></td></tr></table></figure>
+
+<p>输入 <code>git commit -m &quot;add pre-commit&quot;</code> 命令（同时也修改邮箱配置，以便通过 pre-commit）</p>
+<p><img src="https://s2.loli.net/2022/06/17/dfIViKGRSpZz2Bg.png" srcset="/img/loading.gif" lazyload alt="image-20220617181617566"></p>
+<p>**This’s the magic!!!**😮</p>
+<p>再也不用担心我提交乱七八糟的 commit 了，最后我们在校验下，<code>git commit -m &quot;feat: add pre-commit&quot;</code>（老老实实备注）</p>
+<p><img src="https://s2.loli.net/2022/06/17/dx5uQrUBczeVGla.png" srcset="/img/loading.gif" lazyload alt="image-20220617182335380"></p>
+<p>显然，提交成功啦！</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Git/">Git</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Git-Hooks/">Git Hooks</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/14/%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%20rollup.js/">
+                        <span class="hidden-mobile">快速入门 rollup.js</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
