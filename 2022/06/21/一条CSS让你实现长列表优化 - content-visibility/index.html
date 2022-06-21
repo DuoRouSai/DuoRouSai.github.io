@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/favicon.png">
+  <link rel="icon" href="/img/favicon/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="DuoRouSai">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="content-visibility 属性控制一个元素是否渲染其内容，它允许用户代理（浏览器）潜在地省略大量布局和渲染工作，直到需要它为止。适合做一些长列表优化和虚拟列表等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一条 CSS 让你实现长列表优化 - content-visibility">
+<meta property="og:url" content="http://example.com/2022/06/21/%E4%B8%80%E6%9D%A1CSS%E8%AE%A9%E4%BD%A0%E5%AE%9E%E7%8E%B0%E9%95%BF%E5%88%97%E8%A1%A8%E4%BC%98%E5%8C%96%20-%20content-visibility/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="content-visibility 属性控制一个元素是否渲染其内容，它允许用户代理（浏览器）潜在地省略大量布局和渲染工作，直到需要它为止。适合做一些长列表优化和虚拟列表等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/06/20/zEajmcT8IBuU7vJ.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/20/qMEtPysaKrTBCUS.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/20/ADlciwoaSyxNBj2.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/20/ONHFwmXk84VSg67.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/20/iqJmEoGKf72RjQC.png">
+<meta property="og:image" content="https://s2.loli.net/2022/06/20/TpNxJGk3jM1CqrY.png">
+<meta property="article:published_time" content="2022-06-21T13:43:36.380Z">
+<meta property="article:modified_time" content="2022-06-21T13:44:51.535Z">
+<meta property="article:author" content="DuoRouSai">
+<meta property="article:tag" content="性能优化">
+<meta property="article:tag" content="虚拟列表">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2022/06/20/zEajmcT8IBuU7vJ.png">
+  
+  
+  <title>一条 CSS 让你实现长列表优化 - content-visibility - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DuoR</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="一条 CSS 让你实现长列表优化 - content-visibility">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-21 21:43" pubdate>
+        2022年6月21日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      20 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">一条 CSS 让你实现长列表优化 - content-visibility</h1>
+            
+            <div class="markdown-body">
+              <h2 id="一条-CSS-让你实现长列表优化-content-visibility"><a href="#一条-CSS-让你实现长列表优化-content-visibility" class="headerlink" title="一条 CSS 让你实现长列表优化 - content-visibility"></a>一条 CSS 让你实现长列表优化 - content-visibility</h2><blockquote>
+<p>相关的 CSS 属性：</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/content-visibility">content-visibility - CSS: Cascading Style Sheets | MDN (mozilla.org)</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/contain-intrinsic-size">contain-intrinsic-size - CSS: Cascading Style Sheets | MDN (mozilla.org)</a></p>
+</blockquote>
+<h3 id="01-content-visibility"><a href="#01-content-visibility" class="headerlink" title="01 content-visibility"></a>01 content-visibility</h3><p>属性控制一个元素是否渲染其内容，它允许用户代理（浏览器）潜在地省略大量布局和渲染工作，直到需要它为止。适合做一些长列表优化和虚拟列表等</p>
+<figure class="highlight css"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs css"><span class="hljs-comment">/* 属性：visible、hidden、auto */</span><br><span class="hljs-attribute">content-visibility</span>: visible;<br><span class="hljs-attribute">content-visibility</span>: hidden;<br><span class="hljs-attribute">content-visibility</span>: auto;<br></code></pre></div></td></tr></table></figure>
+
+<ul>
+<li>visible：默认属性，无任何作用。</li>
+<li>hidden： 与 <code>display: none</code> 类似</li>
+<li>auto: 判断被设置的该属性的元素是否在可视区，在可视区，则会渲染此元素；否则，不会渲染此元素</li>
+</ul>
+<p>我们浅做一个对比实验，让页面需要渲染大量的 DOM 元素（10000 次），我们使用和不使用的区别</p>
+<figure class="highlight html"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Document<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">      <span class="hljs-selector-class">.box</span> &#123;</span><br><span class="language-css">        <span class="hljs-attribute">content-visibility</span>: auto;</span><br><span class="language-css">      &#125;</span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;boxs&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">      <span class="hljs-keyword">function</span> <span class="hljs-title function_">renderBox</span>(<span class="hljs-params">num</span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> boxs = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;boxs&#x27;</span>)</span><br><span class="language-javascript">        <span class="hljs-keyword">var</span> html = <span class="hljs-string">&#x27;&#x27;</span></span><br><span class="language-javascript">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; num; i++) &#123;</span><br><span class="language-javascript">          html += <span class="hljs-string">`&lt;div class=&quot;box&quot;&gt;</span></span><br><span class="hljs-string"><span class="language-javascript">                    &lt;h1&gt;content-visibility&lt;/h1&gt;</span></span><br><span class="hljs-string"><span class="language-javascript">                    The content-visibility CSS property controls whether or not an element renders its contents at all, along with forcing a strong set of containments, allowing user agents to potentially omit large swathes of layout and rendering work until it becomes needed. Basically it enables the user agent to skip an element&#x27;s rendering work (including layout and painting) until it is needed — which makes the initial page load much faster.</span></span><br><span class="hljs-string"><span class="language-javascript">                    &lt;/div&gt;`</span></span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript">        boxs.<span class="hljs-property">innerHTML</span> = html</span><br><span class="language-javascript">      &#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript">      <span class="hljs-title function_">renderBox</span>(<span class="hljs-number">10000</span>)</span><br><span class="language-javascript">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></div></td></tr></table></figure>
+
+<p>使用 <code>content-visibility: auto;</code> ，发现渲染部分花费了 <code>191ms</code></p>
+<p><img src="https://s2.loli.net/2022/06/20/zEajmcT8IBuU7vJ.png" srcset="/img/loading.gif" lazyload alt="image-20220620115839803"></p>
+<p>没有使用，渲染部分整整花费了 <code>1619ms</code></p>
+<p><img src="https://s2.loli.net/2022/06/20/qMEtPysaKrTBCUS.png" srcset="/img/loading.gif" lazyload alt="image-20220620120140346"></p>
+<p><strong>结论：</strong> 相同的环境下测，使用了 <code>content-visibility: auto;</code> ，优化了 <code>89%</code> ，从<code>1619ms</code> =&gt; <code>191ms</code></p>
+<p><strong>问题：</strong>由于下方的元素在滚动的过程中，出现在视口范围内才被渲染，因此，滚动条出现了明显的飘忽不定的抖动现象。（当然这也是使用了 <code>content-visibility: auto</code> 的一个小问题之一），不过明显可以看出，这与我们通常使用 JavaScript 实现的懒加载或者延迟加载非常类似。</p>
+<p>当然，与懒加载不同的是，在向下滚动的过程中，上方消失的已经被渲染过且消失在视口的元素，也会因为消失在视口中，重新被隐藏。因此，即便页面滚动到最下方，整体的滚动条高度还是没有什么变化的。</p>
+<p><img src="https://s2.loli.net/2022/06/20/ADlciwoaSyxNBj2.png" srcset="/img/loading.gif" lazyload alt="image-20220620135712297" style="zoom:33%;" /><img src="https://s2.loli.net/2022/06/20/ONHFwmXk84VSg67.png" srcset="/img/loading.gif" lazyload alt="image-20220620135804645" style="zoom:33%;" /></p>
+<h3 id="02-利用-contain-intrinsic-size-解决滚动条抖动问题"><a href="#02-利用-contain-intrinsic-size-解决滚动条抖动问题" class="headerlink" title="02 利用 contain-intrinsic-size 解决滚动条抖动问题"></a>02 利用 <code>contain-intrinsic-size</code> 解决滚动条抖动问题</h3><figure class="highlight css"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs css"><span class="hljs-selector-class">.box</span> &#123;<br>  <span class="hljs-attribute">content-visibility</span>: auto;<br>  <span class="hljs-attribute">contain</span>-intrinsic-size: <span class="hljs-number">220px</span>; <span class="hljs-comment">/* 填写对应的高度。如果如法准确知道高度，也可以填写一个大概的值 */</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>如此之后，浏览器会给未被实际渲染的视口之外的 <code>.box</code> 元素一个高度，避免出现滚动条抖动的现象：</p>
+<img src="https://s2.loli.net/2022/06/20/iqJmEoGKf72RjQC.png" srcset="/img/loading.gif" lazyload alt="image-20220620140407166" style="zoom:50%;" />
+
+<h3 id="03-兼容性问题"><a href="#03-兼容性问题" class="headerlink" title="03 兼容性问题"></a>03 兼容性问题</h3><p>这个是从 <a target="_blank" rel="noopener" href="https://caniuse.com/?search=content-visibility">“content-visibility” | Can I use… Support tables for HTML5, CSS3, etc</a> 获取到兼容性一览（2022.6.20）</p>
+<p><img src="https://s2.loli.net/2022/06/20/TpNxJGk3jM1CqrY.png" srcset="/img/loading.gif" lazyload alt="image-20220620140747062"></p>
+<p>可以发现，目前兼容率只能达到大约<strong>70%<strong>， 并前还是有出现 Safari 主流浏览器出现不兼容情况，</strong>当然，由于该属性属于渐进增强一类的功能，即便失效，也完全不影响页面本身的展示。</strong></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/CSS/">CSS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%99%9A%E6%8B%9F%E5%88%97%E8%A1%A8/">虚拟列表</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/17/%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8%20Git%20Hooks%20%E6%9D%A5%E8%A7%A3%E5%86%B3%20%E2%80%9C%E4%B8%8D%E4%BC%9A%E8%BF%98%E6%9C%89%E7%94%A8%20qq%20%E9%82%AE%E7%AE%B1%E6%9D%A5%E6%8F%90%E4%BA%A4%E5%85%AC%E5%8F%B8%E4%BB%A3%E7%A0%81%E5%90%A7%E2%80%9D%20%E7%97%9B%E7%82%B9/">
+                        <span class="hidden-mobile">如何利用 Git Hooks 来解决 “不会还有用 qq 邮箱来提交公司代码吧” 痛点</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
