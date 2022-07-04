@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/favicon.png">
+  <link rel="icon" href="/img/favicon/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="DuoRouSai">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Redux Toolkit简化了 Redux 的使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redux Toolkit 使用指南">
+<meta property="og:url" content="http://example.com/2022/07/04/Redux%20Toolkit%20%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Redux Toolkit简化了 Redux 的使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/07/04/1ab8RWXnpLMwsJy.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/04/QE2YNJcW9anpPGt.gif">
+<meta property="og:image" content="https://s2.loli.net/2022/07/04/nfbBrA9YLSMNqja.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/04/KcokB1AuNmgMJ3b.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/04/BLk5UyvJuzdoghW.png">
+<meta property="og:image" content="https://s2.loli.net/2022/07/04/lOd9T28Qi7g4Zbm.gif">
+<meta property="og:image" content="https://s2.loli.net/2022/07/04/Lvfpt8JybIhuYWU.gif">
+<meta property="article:published_time" content="2022-07-04T13:56:55.429Z">
+<meta property="article:modified_time" content="2022-07-04T13:57:37.024Z">
+<meta property="article:author" content="DuoRouSai">
+<meta property="article:tag" content="Redux Toolkit">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://s2.loli.net/2022/07/04/1ab8RWXnpLMwsJy.png">
+  
+  
+  <title>Redux Toolkit 使用指南 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>DuoR</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/bg.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Redux Toolkit 使用指南">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-07-04 21:56" pubdate>
+        2022年7月4日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      57 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Redux Toolkit 使用指南</h1>
+            
+            <div class="markdown-body">
+              <h2 id="Redux-Toolkit-使用指南"><a href="#Redux-Toolkit-使用指南" class="headerlink" title="Redux Toolkit 使用指南"></a>Redux Toolkit 使用指南</h2><p>官方地址：<a target="_blank" rel="noopener" href="https://redux-toolkit.js.org/introduction/getting-started">Getting Started | Redux Toolkit (redux-toolkit.js.org)</a></p>
+<h3 id="01-前言"><a href="#01-前言" class="headerlink" title="01 前言"></a>01 前言</h3><p><strong>Redux Toolkit 简化了 Redux 的使用</strong></p>
+<p>使用过 Redux 的小伙伴无法避开的痛：</p>
+<ul>
+<li>在真正使用 Redux 之前，需要配置一系列的 Action 、Reduce，显得非常繁琐</li>
+<li>需要添加很多包才能让 Redux 做任何有用的事情</li>
+<li>…</li>
+</ul>
+<h3 id="02-最佳实践"><a href="#02-最佳实践" class="headerlink" title="02 最佳实践"></a>02 最佳实践</h3><p><strong>安装相关依赖</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs bash"><span class="hljs-comment"># NPM</span><br>npm install @reduxjs/toolkit<br>npm install react-redux<br><br><span class="hljs-comment"># Yarn</span><br>yarn add @reduxjs/toolkit<br>yarn add react-redux<br></code></pre></div></td></tr></table></figure>
+
+<p>使用 Redux Toolkit 库目录结构，可参考下：</p>
+<p><img src="https://s2.loli.net/2022/07/04/1ab8RWXnpLMwsJy.png" srcset="/img/loading.gif" lazyload alt="image-20220704153756263"></p>
+<ul>
+<li><p><strong>创建 store</strong></p>
+<figure class="highlight tsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs tsx"><span class="hljs-comment">// store/index.js</span><br><span class="hljs-keyword">import</span> &#123; configureStore &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@reduxjs/toolkit&#x27;</span><br><span class="hljs-keyword">import</span> countReducers <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./modules/countSlice&#x27;</span><br><span class="hljs-keyword">import</span> userReducers <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./modules/userSlice&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> store = <span class="hljs-title function_">configureStore</span>()<br><br><span class="hljs-comment">// 暴露 State 声明类型</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">RootState</span> = <span class="hljs-title class_">ReturnType</span>&lt;<span class="hljs-keyword">typeof</span> store.<span class="hljs-property">getState</span>&gt;<br><br><span class="hljs-comment">// 暴露 dispatch 声明类型</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">AppDispatch</span> = <span class="hljs-keyword">typeof</span> store.<span class="hljs-property">dispatch</span><br></code></pre></div></td></tr></table></figure></li>
+<li><p><strong>通过 react-redux 连接 React 应用</strong></p>
+<figure class="highlight tsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs tsx"><span class="hljs-comment">// layout/index.tsx</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Outlet</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;umi&#x27;</span><br><span class="hljs-keyword">import</span> &#123; store &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/store&#x27;</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Provider</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-redux&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">Layout</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">Provider</span> <span class="hljs-attr">store</span>=<span class="hljs-string">&#123;store&#125;</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Outlet</span> /&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Provider</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></div></td></tr></table></figure></li>
+<li><p><strong>创建 slice( action 和 reducer )</strong></p>
+<p>使用 createSlice 创建一个 slice，我们可以导出生成的 action 和 reducer 函数。</p>
+<p><strong>关键参数：</strong></p>
+<ul>
+<li><p>name</p>
+<p>命名空间，避免了 action type 同名的情况，生成 type 默认为 name/reducer</p>
+</li>
+<li><p>initialState</p>
+<p>初始化状态值</p>
+</li>
+<li><p>reducers</p>
+<p>根据业务编写 reducer，内置了 Immer 库和 thunk 库，不再需要返回一个新的 state 以及可以可以直接处理异步的 action。</p>
+</li>
+</ul>
+<p><strong>countSlice 模块</strong></p>
+<figure class="highlight tsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs tsx"><span class="hljs-comment">// store/modules/countSlice.tsx</span><br><span class="hljs-keyword">import</span> &#123; createSlice, createAsyncThunk &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@reduxjs/toolkit&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-keyword">type</span> &#123; <span class="hljs-title class_">PayloadAction</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@reduxjs/toolkit&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">CountState</span> &#123;<br>  <span class="hljs-attr">value</span>: <span class="hljs-built_in">number</span><br>&#125;<br><br><span class="hljs-keyword">const</span> <span class="hljs-attr">initialState</span>: <span class="hljs-title class_">CountState</span> = &#123;<br>  <span class="hljs-attr">value</span>: <span class="hljs-number">0</span>,<br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> countSlice = <span class="hljs-title function_">createSlice</span>(&#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;count&#x27;</span>,<br>  initialState,<br>  <span class="hljs-attr">reducers</span>: &#123;<br>    <span class="hljs-attr">increment</span>: <span class="hljs-function">(<span class="hljs-params">state: <span class="hljs-built_in">any</span></span>) =&gt;</span> &#123;<br>      state.<span class="hljs-property">value</span> += <span class="hljs-number">1</span><br>    &#125;,<br>    <span class="hljs-attr">decrement</span>: <span class="hljs-function">(<span class="hljs-params">state: <span class="hljs-built_in">any</span></span>) =&gt;</span> &#123;<br>      state.<span class="hljs-property">value</span> -= <span class="hljs-number">1</span><br>    &#125;,<br>  &#125;,<br>  <span class="hljs-attr">extraReducers</span>: <span class="hljs-function">(<span class="hljs-params">builder</span>) =&gt;</span> &#123;<br>    builder.<span class="hljs-title function_">addCase</span>(incrementByAsync.<span class="hljs-property">fulfilled</span>, <span class="hljs-function">(<span class="hljs-params">state, action</span>) =&gt;</span> &#123;<br>      state.<span class="hljs-property">value</span> += action.<span class="hljs-property">payload</span><br>    &#125;)<br>  &#125;,<br>&#125;)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> incrementByAsync = <span class="hljs-title function_">createAsyncThunk</span>(<br>  <span class="hljs-string">&#x27;count/incrementByAsync&#x27;</span>,<br>  <span class="hljs-keyword">async</span> (<span class="hljs-attr">amount</span>: <span class="hljs-built_in">number</span>) =&gt; &#123;<br>    <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve</span>) =&gt;</span> <span class="hljs-built_in">setTimeout</span>(resolve, <span class="hljs-number">1000</span>))<br>    <span class="hljs-keyword">return</span> amount<br>  &#125;<br>)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> &#123; increment, decrement &#125; = countSlice.<span class="hljs-property">actions</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> countSlice.<span class="hljs-property">reducer</span><br></code></pre></div></td></tr></table></figure></li>
+<li><p><strong>将上一步创建好的 Reducer 注入到 store</strong></p>
+<figure class="highlight tsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs tsx"><span class="hljs-comment">// store/index.js</span><br><span class="hljs-keyword">import</span> &#123; configureStore &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@reduxjs/toolkit&#x27;</span><br><span class="hljs-keyword">import</span> countReducers <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./modules/countSlice&#x27;</span><br><span class="hljs-keyword">import</span> userReducers <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./modules/userSlice&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> store = <span class="hljs-title function_">configureStore</span>(&#123;<br>  <span class="hljs-attr">reducer</span>: &#123;<br>    <span class="hljs-attr">count</span>: countReducers,<br>    <span class="hljs-attr">user</span>: userReducers,<br>  &#125;,<br>&#125;)<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">RootState</span> = <span class="hljs-title class_">ReturnType</span>&lt;<span class="hljs-keyword">typeof</span> store.<span class="hljs-property">getState</span>&gt;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">type</span> <span class="hljs-title class_">AppDispatch</span> = <span class="hljs-keyword">typeof</span> store.<span class="hljs-property">dispatch</span><br></code></pre></div></td></tr></table></figure></li>
+<li><p><strong>投入页面使用</strong></p>
+<figure class="highlight tsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs tsx"><span class="hljs-keyword">import</span> <span class="hljs-keyword">type</span> &#123; <span class="hljs-title class_">RootState</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/store&#x27;</span><br><span class="hljs-keyword">import</span> &#123; useSelector, useDispatch &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-redux&#x27;</span><br><span class="hljs-keyword">import</span> &#123;<br>  increment,<br>  decrement,<br>  incrementByAsync,<br>&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/store/modules/countSlice&#x27;</span><br><span class="hljs-keyword">import</span> &#123; addUser, removeUser &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@/store/modules/userSlice&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">HomePage</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> count = <span class="hljs-title function_">useSelector</span>(<span class="hljs-function">(<span class="hljs-params">state: RootState</span>) =&gt;</span> state.<span class="hljs-property">count</span>.<span class="hljs-property">value</span>)<br>  <span class="hljs-keyword">const</span> users = <span class="hljs-title function_">useSelector</span>(<span class="hljs-function">(<span class="hljs-params">state: RootState</span>) =&gt;</span> state.<span class="hljs-property">user</span>.<span class="hljs-property">userList</span>)<br>  <span class="hljs-keyword">const</span> dispatch = <span class="hljs-title function_">useDispatch</span>()<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;count&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;`日入斗金:$&#123;count&#125;`&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">aria-label</span>=<span class="hljs-string">&quot;Increment value&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> dispatch(increment())&#125;</span><br><span class="language-xml">        &gt;</span><br><span class="language-xml">          Increment</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">aria-label</span>=<span class="hljs-string">&quot;Decrement value&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> dispatch(decrement())&#125;</span><br><span class="language-xml">        &gt;</span><br><span class="language-xml">          Decrement</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">aria-label</span>=<span class="hljs-string">&quot;AsyncIncrement value&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> dispatch(incrementByAsync(1))&#125;</span><br><span class="language-xml">        &gt;</span><br><span class="language-xml">          AsyncIncrement</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;user&quot;</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;`用户列表:$&#123;users.join(&#x27;,&#x27;)&#125;`&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">aria-label</span>=<span class="hljs-string">&quot;AsyncIncrement value&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> dispatch(addUser(&#x27;张三&#x27;))&#125;</span><br><span class="language-xml">        &gt;</span><br><span class="language-xml">          addUser</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">aria-label</span>=<span class="hljs-string">&quot;AsyncIncrement value&quot;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> dispatch(removeUser())&#125;</span><br><span class="language-xml">        &gt;</span><br><span class="language-xml">          removeUser</span><br><span class="language-xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></div></td></tr></table></figure></li>
+</ul>
+<p><strong>效果图：</strong></p>
+<p><img src="https://s2.loli.net/2022/07/04/QE2YNJcW9anpPGt.gif" srcset="/img/loading.gif" lazyload alt="GIF 2022-7-4 16-02-06"></p>
+<p><strong>总结：</strong>使用后，会发现 Redux Toolkit 的目标是帮助简化常见的 Redux 用例，帮我们简化了一些样板代码，并不意味这 Redux 不好，Redux 灵活性和扩展性更好，只是在常见项目开发中，我们更需要的是达到那种开箱即用状态，也会是 Redux Toolkit 。</p>
+<h3 id="03-Immer-库"><a href="#03-Immer-库" class="headerlink" title="03 Immer 库"></a>03 Immer 库</h3><p><a target="_blank" rel="noopener" href="https://immerjs.github.io/immer/">Immer</a> 简化了对不可变数据结构的处理</p>
+<p><strong>怎么理解，举一栗子</strong>🌰</p>
+<p>正常来说，JavaScript 中常见数组和对象结构，当我们更新它内部的值的时候，它们的内存地址是没有发生改变的</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">const</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-keyword">const</span> arr1 = arr.<span class="hljs-title function_">push</span>(<span class="hljs-number">4</span>) <span class="hljs-comment">// arr1:[1,2,3]</span><br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr === arr1) <span class="hljs-comment">// true</span><br><br>arr1.<span class="hljs-title function_">push</span>(<span class="hljs-number">4</span>) <span class="hljs-comment">// arr1:[1,2,3,4]</span><br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr === arr1) <span class="hljs-comment">// true</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr) <span class="hljs-comment">// arr:[1,2,3,4]</span><br></code></pre></div></td></tr></table></figure>
+
+<p>但是，我们希望它在更改内部值的时候，在其他的值不发生（内存地址不改变），且它的根对象或者数组和改变地方的内存地址发生改变。</p>
+<p><img src="https://s2.loli.net/2022/07/04/nfbBrA9YLSMNqja.png" srcset="/img/loading.gif" lazyload alt="image-20220704180351879"></p>
+<p>Current 的内存地址发生改变（Current !== Next ）</p>
+<p>话不多说，show my code！</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-comment">// 正常情况，我们更改对象或者数组内部，内存地址是不会发生改变，我们通过clone方式，才能引起它内存地址的改变，但是但是过度深克隆，会引起性能问题，我们选择使用浅克隆Object.assign() 或者 &#123;...obj&#125;</span><br><span class="hljs-keyword">const</span> obj = &#123;<br>  <span class="hljs-attr">a</span>: &#123;<br>    <span class="hljs-attr">b</span>: &#123;<br>      <span class="hljs-attr">d</span>: <span class="hljs-number">2</span>,<br>    &#125;,<br>    <span class="hljs-attr">c</span>: &#123;<br>      <span class="hljs-attr">e</span>: <span class="hljs-number">3</span>,<br>    &#125;,<br>  &#125;,<br>&#125;<br><br><span class="hljs-comment">// 假如改变a的值时</span><br><span class="hljs-keyword">const</span> obj1 = &#123; ...obj, <span class="hljs-attr">a</span>: <span class="hljs-number">1</span> &#125;<br><br><span class="hljs-comment">// 假如改变b的值时</span><br><span class="hljs-keyword">const</span> obj2 = &#123;<br>  ...obj,<br>  <span class="hljs-attr">a</span>: &#123;<br>    ...obj.<span class="hljs-property">a</span>,<br>    <span class="hljs-attr">b</span>: <span class="hljs-number">2</span>,<br>  &#125;,<br>&#125;<br><br><span class="hljs-comment">// 假如改变d的值时</span><br><span class="hljs-keyword">const</span> obj2 = &#123;<br>  ...obj,<br>  <span class="hljs-attr">a</span>: &#123;<br>    ...obj.<span class="hljs-property">a</span>,<br>    <span class="hljs-attr">b</span>: &#123;<br>      ...obj.<span class="hljs-property">a</span>.<span class="hljs-property">b</span>,<br>      <span class="hljs-attr">d</span>: <span class="hljs-number">4</span>,<br>    &#125;,<br>  &#125;,<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>不难看出，为了实现上述“需求”，数据结构越复杂，嵌套地越多，我们需要浅克隆地方就越多，太繁琐了。</p>
+<p>于是，immer 库诞生，就帮我们解决这繁琐地浅克隆</p>
+<figure class="highlight js"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs js"><span class="hljs-keyword">import</span> produce <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;immer&#x27;</span><br><br><span class="hljs-keyword">const</span> baseState = &#123;<br>  <span class="hljs-attr">a</span>: &#123;<br>    <span class="hljs-attr">b</span>: &#123;<br>      <span class="hljs-attr">d</span>: <span class="hljs-number">2</span>,<br>    &#125;,<br>    <span class="hljs-attr">c</span>: &#123;<br>      <span class="hljs-attr">e</span>: <span class="hljs-number">3</span>,<br>    &#125;,<br>  &#125;,<br>&#125;<br><br><span class="hljs-keyword">const</span> nextState = <span class="hljs-title function_">produce</span>(baseState, <span class="hljs-function">(<span class="hljs-params">draft</span>) =&gt;</span> &#123;<br>  draft.<span class="hljs-property">a</span>.<span class="hljs-property">b</span>.<span class="hljs-property">d</span> = <span class="hljs-number">999</span><br>&#125;)<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;baseState&#x27;</span>, baseState)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;nextState&#x27;</span>, nextState)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;nextState === baseState&#x27;</span>, nextState === baseState)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;nextState.a.c === baseState.a.c&#x27;</span>, nextState.<span class="hljs-property">a</span>.<span class="hljs-property">c</span> === baseState.<span class="hljs-property">a</span>.<span class="hljs-property">c</span>)<br></code></pre></div></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2022/07/04/KcokB1AuNmgMJ3b.png" srcset="/img/loading.gif" lazyload alt="image-20220704181557007"></p>
+<p><strong>工作原理：</strong>基本思想是，使用 Immer，您会将所有更改应用到临时草稿，它是<em>currentState</em>的代理。一旦你完成了所有的改变，Immer 将根据对草案状态的改变生成<em>nextState 。</em>这意味着您可以通过简单地修改数据来与数据交互，同时保留不可变数据的所有好处。</p>
+<p><img src="https://s2.loli.net/2022/07/04/BLk5UyvJuzdoghW.png" srcset="/img/loading.gif" lazyload alt="image-20220704181415824"></p>
+<p>至此，小伙伴对 immer 应该有了初步清晰地认识，会有疑问，为什么 Redux Toolkit 需要内置 immer?</p>
+<p>使用过 Redux ， react-redux 小伙伴，应该有所感触，因为 React 是单向数据流 ，当数据发生改变时，数据的内存地址没有发生改变的话，是不会引起 React UI 视图层的更新的。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> react, &#123; useState &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">HomePage</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> [obj, setObj] = <span class="hljs-title function_">useState</span>(&#123;<br>    <span class="hljs-attr">a</span>: &#123;<br>      <span class="hljs-attr">b</span>: &#123;<br>        <span class="hljs-attr">d</span>: <span class="hljs-number">2</span>,<br>      &#125;,<br>      <span class="hljs-attr">c</span>: &#123;<br>        <span class="hljs-attr">e</span>: <span class="hljs-number">3</span>,<br>      &#125;,<br>    &#125;,<br>  &#125;)<br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>&#123;JSON.stringify(obj)&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span></span><br><span class="language-xml">          setObj((current) =&gt; &#123;</span><br><span class="language-xml">            current.a.b.d = 999</span><br><span class="language-xml">            console.log(current)</span><br><span class="language-xml">            return current</span><br><span class="language-xml">          &#125;)</span><br><span class="language-xml">        &#125;</span><br><span class="language-xml">      &gt;</span><br><span class="language-xml">        变成 999</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  )<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>如下图所示，数据一发生改变，但是 UI 层页面并没有发生改变。</p>
+<p><img src="https://s2.loli.net/2022/07/04/lOd9T28Qi7g4Zbm.gif" srcset="/img/loading.gif" lazyload alt="GIF 2022-7-4 18-35-04"></p>
+<p>所以为了让数组或者对象的内存地址改变，只能通过克隆方式改变，所以 Redux 作为状态管理，只负责维系状态，所以要想 UI 层发生改变，只能改变起内存地址（克隆）。深克隆会引起一定性能消耗，只能使用浅克隆。</p>
+<p>**所以内置 Immer **</p>
+<ul>
+<li>极大地简化了不可变的更新逻辑，让代码实际意图更加明显</li>
+<li>正确编写不可变更新很难，对象和数组嵌套越多，而且很容易出错。Immer 有效地消除了意外改变。</li>
+</ul>
+<p><strong>使用 immer 改造下上述案例</strong></p>
+<figure class="highlight jsx"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> produce <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;immer&quot;</span><br><br>...<br>&lt;button<br>    onClick=&#123;<span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">setObj</span>(<span class="hljs-title function_">produce</span>(obj, <span class="hljs-function">(<span class="hljs-params">draft</span>) =&gt;</span> &#123;<br>        draft.<span class="hljs-property">a</span>.<span class="hljs-property">b</span>.<span class="hljs-property">d</span> = <span class="hljs-number">999</span><br>    &#125;))&#125;<br>    &gt;<br>    变成 <span class="hljs-number">999</span><br>&lt;/button&gt;<br>..<br></code></pre></div></td></tr></table></figure>
+
+<p>发现很轻松就实现了！！！😊</p>
+<p><img src="https://s2.loli.net/2022/07/04/Lvfpt8JybIhuYWU.gif" srcset="/img/loading.gif" lazyload alt="GIF 2022-7-4 21-45-31"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Redux-Toolkit/">Redux Toolkit</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Redux-Toolkit/">Redux Toolkit</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/06/21/%E4%B8%80%E6%9D%A1CSS%E8%AE%A9%E4%BD%A0%E5%AE%9E%E7%8E%B0%E9%95%BF%E5%88%97%E8%A1%A8%E4%BC%98%E5%8C%96%20-%20content-visibility/">
+                        <span class="hidden-mobile">一条 CSS 让你实现长列表优化 - content-visibility</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
